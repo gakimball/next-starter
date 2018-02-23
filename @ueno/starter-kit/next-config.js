@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  */
 const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
-  webpack: (config) => {
+  webpack: (config, { dev, isServer }) => {
     const extractCSSPlugin = new ExtractTextPlugin({
       filename: 'static/style.css',
     });
@@ -15,19 +15,29 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
       exclude: /node_modules.*\.css$/,
       use: [
         'classnames-loader',
-        ...extractCSSPlugin.extract([
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                require('autoprefixer'),
-                require('postcss-csso')({ restructure: false }),
-              ],
+        ...extractCSSPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: 1,
+                importLoaders: 1,
+                localIdentName: dev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:10]',
+              },
             },
-          },
-          'sass-loader',
-        ]),
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('autoprefixer'),
+                  require('postcss-csso')({ restructure: false }),
+                ],
+              },
+            },
+            'sass-loader',
+          ],
+        }),
       ],
     });
 

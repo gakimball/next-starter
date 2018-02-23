@@ -22,6 +22,8 @@ const cspConfig = {
     scriptSrc: [
       // Allow scripts hosted from our application.
       "'self'",
+      // @TODO: Remove this when Next.js 5.0.1 comes out
+      "'unsafe-inline'",
     ],
     styleSrc: [
       "'self'",

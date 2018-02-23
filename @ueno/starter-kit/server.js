@@ -17,6 +17,7 @@ module.exports = (config = e => e) => app.prepare().then(() => {
   server.use(...security);
 
   // Gzip compress the responses.
+  // @TODO: Resolve https://github.com/zeit/next.js/issues/3778
   server.use(compression());
 
   server.get('*', (req, res) => {

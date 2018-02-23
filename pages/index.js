@@ -1,10 +1,12 @@
 import React from 'react';
 import { inject, PropTypes as MobxPropTypes } from 'mobx-react';
+import Header from '../components/header';
 import withStores from '../stores';
 import './index.scss';
 
 const Index = ({ planets = [] }) => (
   <div>
+    <Header />
     <p>Nothing feels like ::ffff</p>
     <ul>
       {planets.map(planet => (
