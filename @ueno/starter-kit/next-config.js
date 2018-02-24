@@ -5,7 +5,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  */
 const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config, options) => {
+    const { dev } = options;
+
     const extractCSSPlugin = new ExtractTextPlugin({
       filename: 'static/style.css',
     });
@@ -42,6 +44,10 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
     });
 
     config.plugins.push(extractCSSPlugin);
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options);
+    }
 
     return config;
   },

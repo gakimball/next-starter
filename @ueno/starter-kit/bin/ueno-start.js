@@ -42,6 +42,10 @@ const compiler = webpack({
     modules: [path.join(process.cwd(), 'server'), 'node_modules'],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      __UENO_IS_SERVER__: JSON.stringify(true),
+    }),
+    new webpack.IgnorePlugin(/path\.join/),
     new ReloadServerPlugin({
       script: path.join(process.cwd(), '.server/index.js'),
     }),
