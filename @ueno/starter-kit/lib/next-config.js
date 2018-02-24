@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const withOffline = require('next-offline');
 
 /**
  * Next.js plugin to apply a Sass loader.
@@ -78,4 +79,4 @@ const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
-module.exports = (nextConfig = {}) => withServerFlag(withSass(nextConfig));
+module.exports = (nextConfig = {}) => withOffline(withServerFlag(withSass(nextConfig)));

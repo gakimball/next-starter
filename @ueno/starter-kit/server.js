@@ -1,6 +1,8 @@
+const path = require('path');
 const express = require('express');
 const next = require('next');
 const compression = require('compression');
+const url = require('url');
 const security = require('./lib/security');
 const withUeno = require('./lib/next-config');
 const { next: nextConfig } = require('./config');
@@ -23,7 +25,16 @@ module.exports = (config = e => e) => app.prepare().then(() => {
   server.use(compression());
 
   server.get('*', (req, res) => {
-    handle(req, res);
+    const parsedUrl = url.parse(req.url, true);
+    const { pathname } = parsedUrl;
+
+    if (pathname === '/service-worker.js') {
+      const filePath = path.join(__dirname, '.next', pathname);
+
+      app.serveStatic(req, res, filePath);
+    } else {
+      handle(req, res, parsedUrl);
+    }
   });
 
   server.listen(3000, (err) => {
