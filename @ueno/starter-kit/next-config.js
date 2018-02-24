@@ -1,8 +1,11 @@
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * Next.js plugin to apply a Sass loader.
+ * @private
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.js config.
  */
 const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
   webpack: (config, options) => {
@@ -53,4 +56,26 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
-module.exports = (nextConfig = {}) => withSass(nextConfig);
+/**
+ * Next.js plugin to define a global that indicates what environment the code is in.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.js config.
+ */
+const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
+  webpack(config, options) {
+    const { isServer } = options;
+
+    config.plugins.push(new webpack.DefinePlugin({
+      __UENO_IS_SERVER__: JSON.stringify(isServer),
+    }));
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options);
+    }
+
+    return config;
+  },
+});
+
+module.exports = (nextConfig = {}) => withServerFlag(withSass(nextConfig));

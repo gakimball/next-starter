@@ -86,6 +86,15 @@ const defaultConfig = {
    * @type String
    */
   notifier: 'warn',
+  /**
+   * Helmet configuration.
+   * @type Object
+   */
+  helmet: {
+    htmlAttributes: {
+      lang: 'en',
+    },
+  },
 };
 
 /**
