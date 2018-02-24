@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
+const compose = require('compose-function');
 
 /**
  * Next.js plugin to apply a Sass loader.
@@ -79,4 +80,6 @@ const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
-module.exports = (nextConfig = {}) => withOffline(withServerFlag(withSass(nextConfig)));
+const withUeno = compose(withOffline, withServerFlag, withSass);
+
+module.exports = (nextConfig = {}) => withUeno(nextConfig);
