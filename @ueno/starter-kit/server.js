@@ -2,9 +2,11 @@ const express = require('express');
 const next = require('next');
 const compression = require('compression');
 const security = require('./lib/security');
+const withUeno = require('./lib/next-config');
+const { next: nextConfig } = require('./config');
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev, conf: withUeno(nextConfig) });
 const handle = app.getRequestHandler();
 
 module.exports = (config = e => e) => app.prepare().then(() => {

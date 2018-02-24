@@ -95,6 +95,11 @@ const defaultConfig = {
       lang: 'en',
     },
   },
+  /**
+   * Next.js configuration.
+   * @type Object
+   */
+  next: {},
 };
 
 /**

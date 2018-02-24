@@ -5,10 +5,8 @@ const webpack = require('webpack');
 const ReloadServerPlugin = require('reload-server-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
-/**
- * Run a simple webpack setup to compile the server. Mostly we're interested in using Babel on
- * the server, so we don't need anything fancy like CSS support.
- */
+// Run a simple webpack setup to compile the server. Mostly we're interested in using Babel on
+// the server, so we don't need anything fancy like CSS support.
 const compiler = webpack({
   context: process.cwd(),
   entry: './server/index.js',
