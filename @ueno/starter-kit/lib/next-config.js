@@ -80,6 +80,24 @@ const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
-const withUeno = compose(withOffline, withServerFlag, withSass);
+const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        'babel-loader',
+        'svg-to-jsx-loader',
+      ],
+    });
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options);
+    }
+
+    return config;
+  },
+});
+
+const withUeno = compose(withSvgLoader, withOffline, withServerFlag, withSass);
 
 module.exports = (nextConfig = {}) => withUeno(nextConfig);
