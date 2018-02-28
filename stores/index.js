@@ -1,5 +1,5 @@
 import { extendObservable } from 'mobx';
-import provider from '../@ueno/starter-kit/provider';
+import provider from '../ueno-starter/provider';
 
 class Planets {
 

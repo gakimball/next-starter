@@ -1,3 +1,3 @@
-import Document from '../@ueno/starter-kit/document';
+import Document from '../ueno-starter/document';
 
 export default Document;

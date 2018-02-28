@@ -1,3 +1,3 @@
-import server from '../@ueno/starter-kit/server';
+import server from '../ueno-starter/server';
 
 server();

@@ -1,16 +1,17 @@
 {
-  "name": "next-starter",
+  "name": "@ueno/starter",
   "version": "1.0.0",
   "description": "Ueno starter kit with next.js",
   "main": "pages/index.js",
   "scripts": {
     "start": "NODE_ENV=production node server/index.js",
-    "dev": "@ueno/starter-kit/bin/ueno-start.js",
+    "dev": "./ueno-starter/bin/ueno-start.js",
     "build": "next build",
     "static": "next static",
     "test": "jest"
   },
   "dependencies": {
+    "@ueno/starter": "./ueno-starter-kit",
     "autoprefixer": "^8.0.0",
     "babel-preset-env": "^1.6.1",
     "compose-function": "^3.0.3",

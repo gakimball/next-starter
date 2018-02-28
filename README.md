@@ -49,7 +49,7 @@ Configures Next.js with all the bells and whistles of the starter kit, including
 In `next.config.js`:
 
 ```js
-const withUeno = require('@ueno/starter-kit/next-config');
+const withUeno = require('@ueno/starter/next-config');
 
 module.exports = withUeno();
 ```
@@ -61,7 +61,7 @@ To add your own settings, pass them in as an object to the config function.
 Starts a preconfigured Express sever with Next.
 
 ```js
-import server from '@ueno/starter-kit/server';
+import server from '@ueno/starter/server';
 
 server();
 ```
@@ -69,7 +69,7 @@ server();
 You can tack on extra things to the server before it starts.
 
 ```js
-import server from '@ueno/starter-kit/server';
+import server from '@ueno/starter/server';
 import bodyParser from 'body-parser';
 
 server(app => {
@@ -83,7 +83,7 @@ server(app => {
 To change the wrapper HTML around a React app, Next.js allows you to define a file `/pages/_document.js`. This starter kit includes a pre-made document that adds necessary stuff like CSS, helmet, config values, and so on.
 
 ```js
-import Document from '@ueno/starter-kit/document';
+import Document from '@ueno/starter/document';
 
 export default Document;
 ```
@@ -95,7 +95,7 @@ To make MobX work, we have to wrap each page in our app with a store provider. Y
 First, we make some stores and use the starter kit's `provider()` function:
 
 ```js
-import provider from '@ueno/starter-kit/provider';
+import provider from '@ueno/starter/provider';
 import UIStore from './ui';
 import PlanetsStore from './planets';
 
