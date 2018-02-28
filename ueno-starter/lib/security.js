@@ -9,13 +9,25 @@ const cspConfig = {
     // Note: Setting this to stricter than * breaks the service worker. :(
     // I can't figure out how to get around this, so if you know of a safer
     // implementation that is kinder to service workers please let me know.
-    connectSrc: ['*'], // ["'self'", 'ws:'],
+    connectSrc: [
+      '*',
+      'ws:',
+      'swapi.co',
+    ],
     defaultSrc: ["'self'"],
     imgSrc: [
       "'self' 'unsafe-inline'",
       'data:',
+      '*.facebook.com',
+      '*.google-analytics.com',
+      't.co',
     ],
-    fontSrc: ["'self'", 'data:'],
+    fontSrc: [
+      "'self'",
+      'data:',
+      'fonts.googleapis.com/css',
+      'fonts.gstatic.com',
+    ],
     objectSrc: ["'self'"],
     mediaSrc: ["'self'"],
     manifestSrc: ["'self'"],
@@ -24,12 +36,20 @@ const cspConfig = {
       "'self'",
       // @TODO: Remove this when Next.js 5.0.1 comes out
       "'unsafe-inline'",
+      // Allow polyfills to be loaded
+      'cdn.polyfill.io',
+      // Allow analytics scripts to be loaded
+      '*.google-analytics.com',
+      'connect.facebook.net',
+      'static.ads-twitter.com',
+      'analytics.twitter.com',
     ],
     styleSrc: [
       "'self'",
       // Webpack generates JS that loads our CSS, so this is needed:
       "'unsafe-inline'",
       'blob:',
+      'fonts.googleapis.com',
     ],
   },
 };

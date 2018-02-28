@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig } = getConfig();
+const { serverRuntimeConfig: config } = getConfig();
 
 export default class MyDocument extends Document {
 
@@ -27,10 +27,11 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="/_next/static/style.css" />
           {Object.values(headAttributes).map(attr => attr.toComponent())}
-          <Helmet {...publicRuntimeConfig.helmet} />
+          <Helmet {...config.helmet} />
         </Head>
         <body {...bodyAttributes.toComponent()}>
           <Main />
+          <script src={`${config.polyfillIO.url}?features=${config.polyfillIO.features.join(',')}&flags=gated`} />
           <NextScript />
         </body>
       </html>

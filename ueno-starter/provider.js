@@ -17,11 +17,10 @@ export default (stores) => {
    * @name StoreContainer
    * @private
    * @constructor
-   * @param {Object} state - Initial state.
    */
-  function StoreContainer(state) {
+  function StoreContainer() {
     Object.entries(stores).forEach(([name, Store]) => {
-      this[name] = new Store(state[name]);
+      this[name] = new Store();
     });
   }
 
@@ -32,16 +31,15 @@ export default (stores) => {
    * between page transitions.
    * @private
    * @param {Boolean} [isServer=false] - Server is asking for a store container.
-   * @param {Object} [state={}] - Initial state to give to container stores.
    * @returns {StoreContainer} Store container.
    */
-  const getStores = (isServer = false, state = {}) => {
+  const getStores = (isServer = false) => {
     if (isServer && typeof window === 'undefined') {
-      return new StoreContainer(state);
+      return new StoreContainer();
     }
 
     if (!store) {
-      store = new StoreContainer(state);
+      store = new StoreContainer();
     }
 
     return store;
@@ -57,8 +55,7 @@ export default (stores) => {
 
     static async getInitialProps(ctx) {
       const isServer = !!ctx.req;
-      const storeData = {}; // @TODO Figure out how this works, or if it's needed
-      const props = { isServer, storeData };
+      const props = { isServer };
 
       if (typeof Target.getInitialProps === 'function') {
         Object.assign(props, await Target.getInitialProps(ctx));
@@ -69,13 +66,12 @@ export default (stores) => {
 
     static propTypes = {
       isServer: PropTypes.bool.isRequired,
-      storeData: PropTypes.object.isRequired,
     }
 
     constructor(props) {
       super(props);
 
-      this.stores = getStores(props.isServer, props.storeData);
+      this.stores = getStores(props.isServer);
     }
 
     render() {

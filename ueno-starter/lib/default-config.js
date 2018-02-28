@@ -5,7 +5,24 @@
  */
 module.exports = {
   serverRuntimeConfig: {
+    helmet: {
+      htmlAttributes: {
+        lang: 'en',
+      },
+      title: 'Home',
+      titleTemplate: 'Ueno - %s',
+      meta: [
+        { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      ],
+    },
     passwordProtect: process.env.PASSWORD_PROTECT,
+    polyfillIO: {
+      url: '//cdn.polyfill.io/v2/polyfill.min.js',
+      features: [
+        'default',
+        'es6',
+      ],
+    },
     projectId: 'ueno',
   },
   publicRuntimeConfig: {
@@ -18,19 +35,6 @@ module.exports = {
     twitterPixel: '',
     csp: {},
     serviceWorker: true,
-    polyfillIO: {
-      enabled: true,
-      url: '//cdn.polyfill.io/v2/polyfill.min.js',
-      features: [
-        'default',
-        'es6',
-      ],
-    },
     notifier: 'warn',
-    helmet: {
-      htmlAttributes: {
-        lang: 'en',
-      },
-    },
   },
 };
