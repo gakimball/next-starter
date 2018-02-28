@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
@@ -61,28 +60,6 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
 });
 
 /**
- * Next.js plugin to define a global that indicates what environment the code is in.
- * @private
- * @param {Object} [nextConfig={}] - Next.js config to decorate.
- * @returns {Object} Modified Next.js config.
- */
-const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
-  webpack(config, options) {
-    const { isServer } = options;
-
-    config.plugins.push(new webpack.DefinePlugin({
-      __UENO_IS_SERVER__: JSON.stringify(isServer),
-    }));
-
-    if (typeof nextConfig.webpack === 'function') {
-      return nextConfig.webpack(config, options);
-    }
-
-    return config;
-  },
-});
-
-/**
  * Next.js plugin to add an SVG-to-JSX loader.
  * @private
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
@@ -114,6 +91,6 @@ const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
  */
 const withDefaultConfig = (nextConfig = {}) => deepAssign({}, defaultConfig, nextConfig);
 
-const withUeno = compose(withSvgLoader, withOffline, withServerFlag, withSass, withDefaultConfig);
+const withUeno = compose(withSvgLoader, withOffline, withSass, withDefaultConfig);
 
 module.exports = (nextConfig = {}) => withUeno(nextConfig);
