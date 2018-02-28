@@ -2,10 +2,7 @@
 
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
-import config from './config';
-import buildConfig from './lib/build-config';
 
 export default class MyDocument extends Document {
 
@@ -27,18 +24,10 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="/_next/static/style.css" />
           {Object.values(headAttributes).map(attr => attr.toComponent())}
-          <Helmet {...config('helmet')} />
+          <Helmet />
         </Head>
         <body {...bodyAttributes.toComponent()}>
           <Main />
-          <script
-            type="text/javascript"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.__UENO_CONFIG__ = ${serialize(buildConfig())};
-              `,
-            }}
-          />
           <NextScript />
         </body>
       </html>

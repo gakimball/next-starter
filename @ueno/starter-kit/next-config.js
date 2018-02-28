@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
+const deepAssign = require('deep-assign');
+const defaultConfig = require('./lib/default-config');
 
 /**
  * Next.js plugin to apply a Sass loader.
@@ -80,6 +82,12 @@ const withServerFlag = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
+/**
+ * Next.js plugin to add an SVG-to-JSX loader.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.hs config.
+ */
 const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
   webpack(config, options) {
     config.module.rules.push({
@@ -98,6 +106,14 @@ const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
   },
 });
 
-const withUeno = compose(withSvgLoader, withOffline, withServerFlag, withSass);
+/**
+ * Next.js plugin to insert default config values for the starter kit.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.hs config.
+ */
+const withDefaultConfig = (nextConfig = {}) => deepAssign({}, defaultConfig, nextConfig);
+
+const withUeno = compose(withSvgLoader, withOffline, withServerFlag, withSass, withDefaultConfig);
 
 module.exports = (nextConfig = {}) => withUeno(nextConfig);

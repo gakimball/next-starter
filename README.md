@@ -31,10 +31,30 @@ This is the bare minimum you need for the boilerplate to work:
   - index.js
 - server
   - index.js
+next.config.js
 package.json
 ```
 
 ## Modules
+
+
+### Next Config
+
+Configures Next.js with all the bells and whistles of the starter kit, including:
+
+- Sass, PostCSS, and CSS Modules
+- SVG-to-JSX loader
+- Offline mode via service worker
+
+In `next.config.js`:
+
+```js
+const withUeno = require('@ueno/starter-kit/next-config');
+
+module.exports = withUeno();
+```
+
+To add your own settings, pass them in as an object to the config function.
 
 ### Server
 
@@ -56,18 +76,6 @@ server(app => {
   app.use(bodyParser);
   return app;
 });
-```
-
-### Config
-
-Gets configuration values. A project has a bunch of default config values for things like CSP, helmet, Next, and so on. Config values can also be overridden by creating an `app-config.js` in the project root, which exports options.
-
-Config values can be fetched on the client or server.
-
-```js
-import config from '@ueno/starter-kit/server'
-
-config('helmet.htmlAttributes.lang');
 ```
 
 ### Document
