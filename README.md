@@ -49,7 +49,7 @@ Configures Next.js with all the bells and whistles of the starter kit, including
 In `next.config.js`:
 
 ```js
-const withUeno = require('@ueno/starter/next-config');
+const withUeno = require('@ueno/starter/next');
 
 module.exports = withUeno();
 ```

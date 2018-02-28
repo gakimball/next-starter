@@ -1,3 +1,3 @@
-const withUeno = require('./ueno-starter/next-config');
+const withUeno = require('./ueno-starter/next');
 
 module.exports = withUeno();
