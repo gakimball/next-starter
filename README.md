@@ -10,6 +10,7 @@ Includes all the things you get from Next out of the box, including:
 - Hot reloading
 - Code splitting
 - Static site export
+- Isomorphic project config
 
 Also includes more helpful things on top:
 
@@ -17,8 +18,8 @@ Also includes more helpful things on top:
 - Sass and CSS Modules
 - MobX
 - react-helmet
-- Central project config
 - Service workers
+- Password protection
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
 

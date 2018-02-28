@@ -4,6 +4,10 @@
  * @typedef {Object} UenoConfig
  */
 module.exports = {
+  serverRuntimeConfig: {
+    passwordProtect: process.env.PASSWORD_PROTECT,
+    projectId: 'ueno',
+  },
   publicRuntimeConfig: {
     host: 'localhost',
     port: 3000,
