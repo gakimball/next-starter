@@ -1,8 +1,11 @@
 /* eslint-disable react/no-danger, jsx-a11y/html-has-lang */
 
 import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
 import Helmet from 'react-helmet';
+import Document, { Head, Main, NextScript } from 'next/document';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 export default class MyDocument extends Document {
 
@@ -24,7 +27,7 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="/_next/static/style.css" />
           {Object.values(headAttributes).map(attr => attr.toComponent())}
-          <Helmet />
+          <Helmet {...publicRuntimeConfig.helmet} />
         </Head>
         <body {...bodyAttributes.toComponent()}>
           <Main />
