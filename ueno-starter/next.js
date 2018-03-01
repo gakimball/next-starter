@@ -1,3 +1,4 @@
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
@@ -37,6 +38,10 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
             {
               loader: 'postcss-loader',
               options: {
+                ident: 'postcss',
+                config: {
+                  path: path.join(__dirname, 'lib/postcss.config.js'),
+                },
                 plugins: () => [
                   require('autoprefixer'),
                   require('postcss-csso')({ restructure: false }),
