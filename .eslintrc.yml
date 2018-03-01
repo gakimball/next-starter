@@ -1,1 +1,2 @@
 extends: "@ueno"
+parser: babel-eslint
