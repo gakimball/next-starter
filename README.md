@@ -84,9 +84,7 @@ server(app => {
 To change the wrapper HTML around a React app, Next.js allows you to define a file `/pages/_document.js`. This starter kit includes a pre-made document that adds necessary stuff like CSS, helmet, config values, and so on.
 
 ```js
-import Document from '@ueno/starter/document';
-
-export default Document;
+export { Document } from '@ueno/starter/document';
 ```
 
 ### Provider
@@ -119,6 +117,15 @@ export default class IndexPage extends Component {
   }
 }
 ```
+
+### Environment Variables
+
+Place these in a `.env` at your project root to use them.
+
+- `HOST`: hostname for server. Defaults to `localhost`.
+- `PORT`: port to serve on. Defaults to `3000`.
+- `ENFORCE_HTTPS`: redirect all HTTP requests to HTTPS. Defaults to disabled.
+- `PASSWORD_PROTECT`: gate all server access with a login form. Use `username:password` (with a colon) to require a username/password combo, or use `password` (without a colon) to just require a password.
 
 # License
 

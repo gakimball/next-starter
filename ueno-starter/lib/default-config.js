@@ -24,10 +24,9 @@ module.exports = {
       ],
     },
     projectId: 'ueno',
+    serverWorker: false,
   },
   publicRuntimeConfig: {
-    host: 'localhost',
-    port: 3000,
     herokuDevtools: false,
     enforceHttps: false,
     gaId: '',

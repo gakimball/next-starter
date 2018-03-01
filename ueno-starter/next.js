@@ -91,6 +91,21 @@ const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
  */
 const withDefaultConfig = (nextConfig = {}) => deepAssign({}, defaultConfig, nextConfig);
 
-const withUeno = compose(withSvgLoader, withOffline, withSass, withDefaultConfig);
+/**
+ * Next.js plugin to enable service workers.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.hs config.
+ */
+const withServiceWorker = (nextConfig = {}) => {
+  // Only add the plugin if it's been enabled
+  if (nextConfig.serverRuntimeConfig.serviceWorker) {
+    return withOffline(nextConfig);
+  }
+
+  return nextConfig;
+};
+
+const withUeno = compose(withServiceWorker, withSvgLoader, withSass, withDefaultConfig);
 
 module.exports = (nextConfig = {}) => withUeno(nextConfig);
