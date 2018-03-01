@@ -36,8 +36,16 @@ next.config.js
 package.json
 ```
 
-## Modules
+## Shell Commands
 
+These commands are wrappers for the Next.js shell commands, with some extra stuff sprinkled in.
+
+- `ueno-starter dev`: run app in development mode.
+- `ueno-starter build`: build app for production. Run this before deploying to a server.
+- `ueno-starter start`: run app in production mode.
+- `ueno-starter export`: export static version of app.
+
+## Modules
 
 ### Next Config
 
