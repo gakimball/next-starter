@@ -12,10 +12,15 @@ dotenv.config();
 const cli = meow(`
   Usage:
     $ ueno-starter <command>
+    $ ueno-starter help <command>
 
   Commands:
     build, dev, export, start
-`);
+
+  Run "ueno-starter help <command>" to get info on a specific command.
+`, {
+  description: 'Ueno Starter Kit',
+});
 
 switch (cli.input[0]) {
   // Build production bundles for React app and server
@@ -56,6 +61,27 @@ switch (cli.input[0]) {
         NODE_ENV: 'production',
       },
     });
+
+    break;
+  }
+  case 'help': {
+    const command = cli.input[1];
+
+    const helpText = {
+      build: 'Build your app for production. Run this before deploying to a server.',
+      dev: 'Run your app in development mode.',
+      export: 'Export your app as a static site.',
+      help: 'Get info on a command.',
+      start: 'Run your app in production mode.',
+    };
+
+    if (!command) {
+      console.log('Run "ueno-starter help <command>" to get info on a specific command.');
+    } else if (command in helpText) {
+      console.log(`  Usage:\n    $ ueno-starter ${command}\n\n  ${helpText[command]}`);
+    } else {
+      cli.showHelp(0);
+    }
 
     break;
   }
