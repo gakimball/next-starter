@@ -34,8 +34,8 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   }
 
   // Require a username and password to see anything (turned off by default)
-  if (config.passwordProtect) {
-    server.use(basicAuth(config.passwordProtect));
+  if (process.env.PASSWORD_PROTECT) {
+    server.use(basicAuth(process.env.PASSWORD_PROTECT));
   }
 
   // All non-API requests go to Next.js

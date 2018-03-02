@@ -1,3 +1,9 @@
+const toBoolean = (val) => {
+  if (val === 'true' || val === '1') return true;
+  if (val === 'false') return false;
+  return true;
+};
+
 /**
  * Default configuration values. These are deeply merged with any user-supplied values from
  * `app-config.js`.
@@ -21,8 +27,6 @@ module.exports = {
         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       ],
     },
-    // Enable password protection for all pages
-    passwordProtect: process.env.PASSWORD_PROTECT,
     // Enable polyfill.io (set to `null` to disable)
     polyfillIO: {
       // Script to fetch
@@ -53,9 +57,7 @@ module.exports = {
    */
   publicRuntimeConfig: {
     // @TODO Enable Heroku dev tools
-    herokuDevtools: false,
-    // Redirect HTTP requests to HTTPS
-    enforceHttps: false,
+    remoteDevtools: toBoolean(process.env.REMOTE_DEVTOOLS),
     // Enable Google Analytics tracking
     gaId: '',
     // @TODO Show OS notifications
