@@ -15,7 +15,7 @@ module.exports = (app) => {
 
   router.get('/service-worker.js', (req, res) => {
     const parsedUrl = url.parse(req.url, true);
-    const filePath = path.join(__dirname, '../.next', parsedUrl.pathname);
+    const filePath = path.join(__dirname, '../', app.nextConfig.distDir, parsedUrl.pathname);
 
     app.serveStatic(req, res, filePath);
   });
