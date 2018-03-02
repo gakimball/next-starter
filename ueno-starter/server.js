@@ -40,7 +40,6 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
 
   // Allow the service worker initialization script to be served
   if (!dev && config.serviceWorker) {
-    console.log('Using this!');
     server.use(serviceWorker(app));
   }
 
