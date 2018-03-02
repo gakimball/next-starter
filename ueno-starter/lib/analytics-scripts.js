@@ -1,3 +1,9 @@
+/**
+ * JavaScript to enable tracking with Facebook and Twitter. These strings are placed in inline
+ * `<script>` tags loaded on every page.
+ * @private
+ */
+
 export const facebookPixel = pixel => `
   // Facebook Pixel
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?

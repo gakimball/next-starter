@@ -7,7 +7,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
 import cspHeaderHash from './lib/csp-header-hash';
 import inlineScript from './lib/inline-script';
-import { facebookPixel, twitterPixel } from './lib/analytics';
+import { facebookPixel, twitterPixel } from './lib/analytics-scripts';
 
 const { serverRuntimeConfig: config } = getConfig();
 
