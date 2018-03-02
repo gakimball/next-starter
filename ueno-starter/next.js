@@ -113,4 +113,4 @@ const withServiceWorker = (nextConfig = {}) => {
 
 const withUeno = compose(withServiceWorker, withSvgLoader, withSass, withDefaultConfig);
 
-module.exports = (nextConfig = {}) => withUeno(nextConfig);
+module.exports = withUeno;
