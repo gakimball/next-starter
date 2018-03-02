@@ -7,13 +7,23 @@ const nodeExternals = require('webpack-node-externals');
  * Create a Webpack compiler for the server. It's not as complicated as the one used for the React
  * app, because all we really want is to transpile Babel.
  * @param {Object} [options] - Compiler options.
- * @param {Boolean} [options.dev=false] Use dev config.
+ * @param {Boolean} [options.dev=false] - Use dev config.
  * @returns {Object} Webpack compiler.
  */
 module.exports = ({ dev = false }) => {
+  let defaultServerPath;
+
+  // Check if the user has defined their own server. If not, use the default one
+  try {
+    require.resolve(path.join(process.cwd(), 'server/index.js'));
+    defaultServerPath = null;
+  } catch (err) {
+    defaultServerPath = require.resolve('./default-server');
+  }
+
   const config = {
     context: process.cwd(),
-    entry: './server/index.js',
+    entry: defaultServerPath || './server/index.js',
     output: {
       filename: 'index.js',
       path: path.join(process.cwd(), '.server'),

@@ -31,6 +31,8 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
               loader: 'css-loader',
               options: {
                 modules: 1,
+                minimize: !dev,
+                sourceMap: dev,
                 importLoaders: 1,
                 localIdentName: dev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:10]',
               },

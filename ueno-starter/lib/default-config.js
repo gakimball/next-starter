@@ -4,6 +4,13 @@ const toBoolean = (val) => {
   return true;
 };
 
+const defaultBaseUrl = () => {
+  const host = process.env.HOST || 'localhost';
+  const port = process.env.PORT || 3000;
+
+  return `http://${host}:${port}`;
+};
+
 /**
  * Default configuration values. These are deeply merged with any user-supplied values from
  * `app-config.js`.
@@ -38,6 +45,8 @@ module.exports = {
     googleFonts: true,
     // Add to default Content Security Policy
     csp: {},
+    // @TODO Show OS notifications
+    notifier: 'warn',
   },
   /**
    * Config values available to the server and the client. Store values here that are permissable
@@ -60,7 +69,7 @@ module.exports = {
     remoteDevtools: toBoolean(process.env.REMOTE_DEVTOOLS),
     // Enable Google Analytics tracking
     gaId: '',
-    // @TODO Show OS notifications
-    notifier: 'warn',
+    // Base URL for server requests
+    baseUrl: process.env.BASE_URL || defaultBaseUrl(),
   },
 };

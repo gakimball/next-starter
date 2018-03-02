@@ -64,6 +64,7 @@ switch (cli.input[0]) {
 
     break;
   }
+  // Display info about a specific command
   case 'help': {
     const command = cli.input[1];
 
