@@ -4,6 +4,11 @@
  * @typedef {Object} UenoConfig
  */
 module.exports = {
+  /**
+   * Config values available to the server only. Store sensitive things here that shouldn't be
+   * visible to the client.
+   * @type Object
+   */
   serverRuntimeConfig: {
     helmet: {
       htmlAttributes: {
@@ -28,6 +33,11 @@ module.exports = {
     facebookPixel: null,
     twitterPixel: null,
   },
+  /**
+   * Config values available to the server and the client. Store values here that are permissable
+   * to be revealed to the client.
+   * @type Object
+   */
   publicRuntimeConfig: {
     herokuDevtools: false,
     enforceHttps: false,
