@@ -103,7 +103,7 @@ const withDefaultConfig = (nextConfig = {}) => deepAssign({}, defaultConfig, nex
  * @returns {Object} Modified Next.hs config.
  */
 const withServiceWorker = (nextConfig = {}) => {
-  // Only add the plugin if it's been enabled
+  // Only add the plugin if it's been enabled and we're in production
   if (nextConfig.serverRuntimeConfig.serviceWorker) {
     return withOffline(nextConfig);
   }

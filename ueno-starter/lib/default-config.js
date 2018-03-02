@@ -40,7 +40,7 @@ module.exports = {
     // Unique project ID (used for realm in basic auth)
     projectId: 'ueno',
     // Enable offline support via service worker
-    serverWorker: false,
+    serviceWorker: true,
     // Enable Facebook tracking
     facebookPixel: null,
     // Enable Twitter tracking

@@ -43,6 +43,7 @@ module.exports = ({ dev = false }) => {
     resolve: {
       modules: [path.join(process.cwd(), 'server'), 'node_modules'],
     },
+    node: false,
   };
 
   if (dev) {

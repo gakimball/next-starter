@@ -47,6 +47,9 @@ const createCsp = (config) => {
         // Allow polyfills to be loaded
         config.polyfillIO && 'cdn.polyfill.io',
 
+        // Allow service worker scripts from Google's CDN to be loaded
+        config.serviceWorker && 'storage.googleapis.com',
+
         // Allow analytics scripts to be loaded
         config.gaID && '*.google-analytics.com',
         config.facebookPixel && 'connect.facebook.net',

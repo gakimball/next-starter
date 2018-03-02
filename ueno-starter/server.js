@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const next = require('next');
 const compression = require('compression');
@@ -6,6 +5,7 @@ const url = require('url');
 const security = require('./lib/security');
 const basicAuth = require('./lib/basic-auth');
 const enforceHttps = require('./lib/enforce-https');
+const serviceWorker = require('./lib/service-worker');
 const { default: getConfig } = require('next/config');
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -29,7 +29,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   server.use(compression());
 
   // Enforce HTTPS (turned off by default)
-  if (dev && process.env.ENFORCE_HTTPS) {
+  if (!dev && process.env.ENFORCE_HTTPS) {
     server.use(enforceHttps(host));
   }
 
@@ -38,18 +38,17 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
     server.use(basicAuth(process.env.PASSWORD_PROTECT));
   }
 
+  // Allow the service worker initialization script to be served
+  if (!dev && config.serviceWorker) {
+    console.log('Using this!');
+    server.use(serviceWorker(app));
+  }
+
   // All non-API requests go to Next.js
   server.get('*', (req, res) => {
     const parsedUrl = url.parse(req.url, true);
-    const { pathname } = parsedUrl;
 
-    if (pathname === '/service-worker.js') {
-      const filePath = path.join(__dirname, '.next', pathname);
-
-      app.serveStatic(req, res, filePath);
-    } else {
-      handle(req, res, parsedUrl);
-    }
+    handle(req, res, parsedUrl);
   });
 
   server.listen(port, (err) => {
