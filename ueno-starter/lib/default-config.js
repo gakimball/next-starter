@@ -43,6 +43,8 @@ module.exports = {
     twitterPixel: null,
     // Enable loading resources from Google Fonts
     googleFonts: true,
+    // Add to default Content Security Policy
+    csp: {},
   },
   /**
    * Config values available to the server and the client. Store values here that are permissable
@@ -56,8 +58,6 @@ module.exports = {
     enforceHttps: false,
     // Enable Google Analytics tracking
     gaId: '',
-    // @TODO Add to default CSP
-    csp: {},
     // @TODO Show OS notifications
     notifier: 'warn',
   },

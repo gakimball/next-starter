@@ -3,67 +3,80 @@ const hpp = require('hpp');
 const helmet = require('helmet');
 const compact = require('lodash/compact');
 
-const createCsp = config => ({
-  directives: {
-    childSrc: ["'self'"],
-    // Note: Setting this to stricter than * breaks the service worker. :(
-    // I can't figure out how to get around this, so if you know of a safer
-    // implementation that is kinder to service workers please let me know.
-    connectSrc: [
-      '*',
-      'ws:',
-    ],
-    defaultSrc: ["'self'"],
-    imgSrc: compact([
-      // Allow our own hosted and inline images to be loaded
-      "'self' 'unsafe-inline'",
-      'data:',
+const createCsp = (config) => {
+  const defaults = {
+    directives: {
+      childSrc: ["'self'"],
+      // Note: Setting this to stricter than * breaks the service worker. :(
+      // I can't figure out how to get around this, so if you know of a safer
+      // implementation that is kinder to service workers please let me know.
+      connectSrc: [
+        '*',
+        'ws:',
+      ],
+      defaultSrc: ["'self'"],
+      imgSrc: compact([
+        // Allow our own hosted and inline images to be loaded
+        "'self' 'unsafe-inline'",
+        'data:',
 
-      // Allow analytics tracking pixels to be loaded
-      config.gaId && '*.google-analytics.com',
-      config.facebookPixel && '*.facebook.com',
-      config.twitterPixel && 't.co',
-    ]),
-    fontSrc: compact([
-      // Allow self-hosted fonts to be loaded
-      "'self'",
-      'data:',
+        // Allow analytics tracking pixels to be loaded
+        config.gaId && '*.google-analytics.com',
+        config.facebookPixel && '*.facebook.com',
+        config.twitterPixel && 't.co',
+      ]),
+      fontSrc: compact([
+        // Allow self-hosted fonts to be loaded
+        "'self'",
+        'data:',
 
-      // Allow fonts from Google Fonts to be loaded
-      config.googleFonts && 'fonts.googleapis.com/css',
-      config.googleFonts && 'fonts.gstatic.com',
-    ]),
-    objectSrc: ["'self'"],
-    mediaSrc: ["'self'"],
-    manifestSrc: ["'self'"],
-    scriptSrc: compact([
-      // Allow scripts hosted from our application
-      "'self'",
+        // Allow fonts from Google Fonts to be loaded
+        config.googleFonts && 'fonts.googleapis.com/css',
+        config.googleFonts && 'fonts.gstatic.com',
+      ]),
+      objectSrc: ["'self'"],
+      mediaSrc: ["'self'"],
+      manifestSrc: ["'self'"],
+      scriptSrc: compact([
+        // Allow scripts hosted from our application
+        "'self'",
 
-      // Allow scripts labeled with a nonce
-      (req, res) => `'nonce-${res.locals.nonce}'`,
+        // Allow scripts labeled with a nonce
+        (req, res) => `'nonce-${res.locals.nonce}'`,
 
-      // Allow polyfills to be loaded
-      config.polyfillIO && 'cdn.polyfill.io',
+        // Allow polyfills to be loaded
+        config.polyfillIO && 'cdn.polyfill.io',
 
-      // Allow analytics scripts to be loaded
-      config.gaID && '*.google-analytics.com',
-      config.facebookPixel && 'connect.facebook.net',
-      config.twitterPixel && 'static.ads-twitter.com',
-      config.twitterPixel && 'analytics.twitter.com',
-    ]),
-    styleSrc: [
-      "'self'",
+        // Allow analytics scripts to be loaded
+        config.gaID && '*.google-analytics.com',
+        config.facebookPixel && 'connect.facebook.net',
+        config.twitterPixel && 'static.ads-twitter.com',
+        config.twitterPixel && 'analytics.twitter.com',
+      ]),
+      styleSrc: [
+        "'self'",
 
-      // Webpack generates JS that loads our CSS, so this is needed:
-      "'unsafe-inline'",
-      'blob:',
+        // Webpack generates JS that loads our CSS, so this is needed:
+        "'unsafe-inline'",
+        'blob:',
 
-      // Allow CSS from Google Fonts to be loaded
-      config.googleFonts && 'fonts.googleapis.com',
-    ],
-  },
-});
+        // Allow CSS from Google Fonts to be loaded
+        config.googleFonts && 'fonts.googleapis.com',
+      ],
+    },
+  };
+
+  // Add user-configured CSP directives
+  Object.entries(config.csp).forEach(([key, value]) => {
+    if (key in defaults.directives) {
+      defaults.directives[key].push(...value);
+    } else {
+      defaults.directives[key] = value;
+    }
+  });
+
+  return defaults;
+};
 
 // Attach a unique "nonce" to every response.  This allows use to declare
 // inline scripts as being safe for execution against our content security policy.
