@@ -70,6 +70,10 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
     }
 
     console.log(`> Ready on http://${host}:${port}`); // eslint-disable-line no-console
+
+    if (process.env.REMOTE_URL) {
+      console.log(`> Ready remotely on ${process.env.REMOTE_URL}`); // eslint-disable-line no-console
+    }
   });
 
   return server;

@@ -5,6 +5,7 @@
 const dotenv = require('dotenv');
 const meow = require('meow');
 const execa = require('execa');
+const ngrok = require('ngrok');
 const serverCompiler = require('../lib/server-compiler');
 
 dotenv.config();
@@ -20,6 +21,12 @@ const cli = meow(`
   Run "ueno-starter help <command>" to get info on a specific command.
 `, {
   description: 'Ueno Starter Kit',
+  flags: {
+    remote: {
+      type: 'boolean',
+      alias: 'r',
+    },
+  },
 });
 
 switch (cli.input[0]) {
@@ -43,7 +50,19 @@ switch (cli.input[0]) {
   case 'dev': {
     const compiler = serverCompiler({ dev: true });
 
-    compiler.watch();
+    if (cli.flags.remote) {
+      ngrok.connect(process.env.PORT || 3000, (err, url) => {
+        if (err) {
+          throw err;
+        }
+
+        process.env.REMOTE_URL = url;
+
+        compiler.watch();
+      });
+    } else {
+      compiler.watch();
+    }
 
     break;
   }

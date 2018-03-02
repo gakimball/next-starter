@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import Document, { Head, Main, NextScript } from 'next/document';
+import NextDocument, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
 import cspHeaderHash from './lib/csp-header-hash';
 import inlineScript from './lib/inline-script';
@@ -16,7 +16,7 @@ const dev = process.env.NODE_ENV !== 'production';
  * React component for use with Next.js's `_document.js` feature. It loads all the extra scripts,
  * styles, and meta elements used to make the starter kit go.
  */
-export default class UenoDocument extends Document {
+export default class Document extends NextDocument {
 
   /**
    * This function runs on the server before the wrapping HTML for the app is rendered. We can
