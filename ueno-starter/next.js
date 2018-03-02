@@ -13,50 +13,68 @@ const defaultConfig = require('./lib/default-config');
  */
 const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
   webpack: (config, options) => {
-    const { dev } = options;
+    const { dev, isServer } = options;
 
+    // Plugin to create final CSS file in production
     const extractCSSPlugin = new ExtractTextPlugin({
       filename: 'static/style.css',
     });
+
+    // Core loaders used in every situation
+    const cssLoaders = [
+      {
+        loader: isServer && dev ? 'css-loader/locals' : 'css-loader',
+        options: {
+          modules: 1,
+          minimize: !dev,
+          sourceMap: dev,
+          importLoaders: 1,
+          localIdentName: dev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:10]',
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          ident: 'postcss',
+          config: {
+            path: path.join(__dirname, 'lib/postcss.config.js'),
+          },
+          plugins: () => [
+            require('autoprefixer'),
+            require('postcss-csso')({ restructure: false }),
+          ],
+          sourceMap: dev,
+        },
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          outputStyle: 'expanded',
+          sourceMap: dev,
+        },
+      },
+    ];
+
+    // Loader sequence used in development
+    const devLoaders = isServer ? cssLoaders : ['style-loader', ...cssLoaders];
 
     config.module.rules.push({
       test: /(\.scss|\.css)$/,
       exclude: /node_modules.*\.css$/,
       use: [
         'classnames-loader',
-        ...extractCSSPlugin.extract({
+        // In development, each CSS module is embedded as a separate <link> tag, so they can be
+        // separately hot reloaded. In production, all the CSS is bundled into one file.
+        ...(dev ? devLoaders : extractCSSPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: 1,
-                minimize: !dev,
-                sourceMap: dev,
-                importLoaders: 1,
-                localIdentName: dev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:10]',
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                config: {
-                  path: path.join(__dirname, 'lib/postcss.config.js'),
-                },
-                plugins: () => [
-                  require('autoprefixer'),
-                  require('postcss-csso')({ restructure: false }),
-                ],
-              },
-            },
-            'sass-loader',
-          ],
-        }),
+          use: cssLoaders,
+        })),
       ],
     });
 
-    config.plugins.push(extractCSSPlugin);
+    if (dev) {
+      config.plugins.push(extractCSSPlugin);
+    }
 
     if (typeof nextConfig.webpack === 'function') {
       return nextConfig.webpack(config, options);
