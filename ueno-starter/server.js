@@ -15,8 +15,17 @@ const { serverRuntimeConfig: config } = getConfig();
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
+/**
+ * Create an Express server with security middleware that serves your React app. The server can
+ * be customized with extra middleware and routes by passing a callback to the function with
+ * one argument, which is the server.
+ * @param {Function} [decorate] - Function to modify the server. Takes one parameter, the Express
+ * server. Does not need to return a value.
+ * @returns {Promise.<Object>} Promise containing the server instance. The Promise resolves once
+ * the app has been initialized and the server is listening for requests.
+ */
 module.exports = (decorate = e => e) => app.prepare().then(() => {
-  const server = decorate(express());
+  const server = express();
 
   // Don't expose any software information to potential hackers.
   server.disable('x-powered-by');
@@ -42,6 +51,11 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   if (!dev && config.serviceWorker) {
     server.use(serviceWorker(app));
   }
+
+  // This is where we allow the user to customize the server.
+  // It comes after all the essential middleware is setup, and before the `*` route that
+  // catches every unhandled request.
+  decorate(server);
 
   // All non-API requests go to Next.js
   server.get('*', (req, res) => {
