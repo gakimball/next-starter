@@ -1,9 +1,9 @@
 const uuid = require('uuid');
 const hpp = require('hpp');
 const helmet = require('helmet');
+const compact = require('lodash/compact');
 
-// @TODO: Allow CSP to be extended
-const cspConfig = {
+const createCsp = config => ({
   directives: {
     childSrc: ["'self'"],
     // Note: Setting this to stricter than * breaks the service worker. :(
@@ -12,47 +12,58 @@ const cspConfig = {
     connectSrc: [
       '*',
       'ws:',
-      'swapi.co',
     ],
     defaultSrc: ["'self'"],
-    imgSrc: [
+    imgSrc: compact([
+      // Allow our own hosted and inline images to be loaded
       "'self' 'unsafe-inline'",
       'data:',
-      '*.facebook.com',
-      '*.google-analytics.com',
-      't.co',
-    ],
-    fontSrc: [
+
+      // Allow analytics tracking pixels to be loaded
+      config.gaId && '*.google-analytics.com',
+      config.facebookPixel && '*.facebook.com',
+      config.twitterPixel && 't.co',
+    ]),
+    fontSrc: compact([
+      // Allow self-hosted fonts to be loaded
       "'self'",
       'data:',
-      'fonts.googleapis.com/css',
-      'fonts.gstatic.com',
-    ],
+
+      // Allow fonts from Google Fonts to be loaded
+      config.googleFonts && 'fonts.googleapis.com/css',
+      config.googleFonts && 'fonts.gstatic.com',
+    ]),
     objectSrc: ["'self'"],
     mediaSrc: ["'self'"],
     manifestSrc: ["'self'"],
-    scriptSrc: [
-      // Allow scripts hosted from our application.
+    scriptSrc: compact([
+      // Allow scripts hosted from our application
       "'self'",
+
       // Allow scripts labeled with a nonce
       (req, res) => `'nonce-${res.locals.nonce}'`,
+
       // Allow polyfills to be loaded
-      'cdn.polyfill.io',
+      config.polyfillIO && 'cdn.polyfill.io',
+
       // Allow analytics scripts to be loaded
-      '*.google-analytics.com',
-      'connect.facebook.net',
-      'static.ads-twitter.com',
-      'analytics.twitter.com',
-    ],
+      config.gaID && '*.google-analytics.com',
+      config.facebookPixel && 'connect.facebook.net',
+      config.twitterPixel && 'static.ads-twitter.com',
+      config.twitterPixel && 'analytics.twitter.com',
+    ]),
     styleSrc: [
       "'self'",
+
       // Webpack generates JS that loads our CSS, so this is needed:
       "'unsafe-inline'",
       'blob:',
-      'fonts.googleapis.com',
+
+      // Allow CSS from Google Fonts to be loaded
+      config.googleFonts && 'fonts.googleapis.com',
     ],
   },
-};
+});
 
 // Attach a unique "nonce" to every response.  This allows use to declare
 // inline scripts as being safe for execution against our content security policy.
@@ -62,7 +73,7 @@ function nonceMiddleware(req, res, next) {
   next();
 }
 
-module.exports = [
+module.exports = config => [
   nonceMiddleware,
 
   // Prevent HTTP Parameter pollution.
@@ -109,5 +120,5 @@ module.exports = [
   // The CSP configuration is an optional item for helmet, however you should
   // not remove it without making a serious consideration that you do not
   // require the added security.
-  helmet.contentSecurityPolicy(cspConfig),
+  helmet.contentSecurityPolicy(createCsp(config)),
 ];

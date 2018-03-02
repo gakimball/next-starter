@@ -22,7 +22,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   server.disable('x-powered-by');
 
   // Security middlewares.
-  server.use(...security);
+  server.use(...security(config));
 
   // Gzip compress the responses.
   // @TODO: Resolve https://github.com/zeit/next.js/issues/3778
