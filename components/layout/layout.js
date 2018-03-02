@@ -1,10 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: config } = getConfig();
 
 const Layout = ({ title, children }) => (
   <div>
-    <Helmet title={title} />
+    <Helmet {...config.helmet} title={title} />
     {children}
   </div>
 );

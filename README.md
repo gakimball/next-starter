@@ -20,6 +20,7 @@ Also includes more helpful things on top:
 - react-helmet
 - Service workers
 - Password protection
+- Google, Facebook, and Twitter analytics
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
 

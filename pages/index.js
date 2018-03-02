@@ -7,7 +7,6 @@ import Link from 'next/link';
 import Header from '../components/header';
 import Layout from '../components/layout';
 import withStores from '../stores';
-import './index.scss';
 
 const { publicRuntimeConfig: config } = getConfig();
 

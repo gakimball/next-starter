@@ -73,9 +73,6 @@ export default class UenoDocument extends Document {
           {/* <head> values from react-helmet */}
           {Object.values(headAttributes).map(attr => attr.toComponent())}
 
-          {/* react-helmet */}
-          <Helmet {...config.helmet} />
-
           {/* Script to change `no-js` class to `js` */}
           <InlineScript body='var e=document.documentElement;e.className=e.className.replace("no-js","js")' />
 

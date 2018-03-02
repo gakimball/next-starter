@@ -16,17 +16,6 @@ module.exports = {
    * @type Object
    */
   serverRuntimeConfig: {
-    // Pass Helmet attributes to HTML
-    helmet: {
-      htmlAttributes: {
-        lang: 'en',
-      },
-      title: 'Home',
-      titleTemplate: 'Ueno - %s',
-      meta: [
-        { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-      ],
-    },
     // Enable polyfill.io (set to `null` to disable)
     polyfillIO: {
       // Script to fetch
@@ -56,6 +45,17 @@ module.exports = {
    * @type Object
    */
   publicRuntimeConfig: {
+    // Pass Helmet attributes to HTML
+    helmet: {
+      htmlAttributes: {
+        lang: 'en',
+      },
+      title: 'Home',
+      titleTemplate: 'Ueno - %s',
+      meta: [
+        { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      ],
+    },
     // @TODO Enable Heroku dev tools
     remoteDevtools: toBoolean(process.env.REMOTE_DEVTOOLS),
     // Enable Google Analytics tracking
