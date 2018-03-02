@@ -34,8 +34,8 @@ const cspConfig = {
     scriptSrc: [
       // Allow scripts hosted from our application.
       "'self'",
-      // @TODO: Remove this when Next.js 5.0.1 comes out
-      "'unsafe-inline'",
+      // Allow scripts labeled with a nonce
+      (req, res) => `'nonce-${res.locals.nonce}'`,
       // Allow polyfills to be loaded
       'cdn.polyfill.io',
       // Allow analytics scripts to be loaded

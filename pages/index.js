@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react';
 import { inject, PropTypes as MobxPropTypes } from 'mobx-react';
 import getConfig from 'next/config';
+import Link from 'next/link';
 import Header from '../components/header';
 import Layout from '../components/layout';
 import withStores from '../stores';
@@ -24,7 +27,7 @@ export default class Index extends React.Component {
     return (
       <Layout title="Home!!">
         <Header />
-        <p>Nothing feels like ::ffff</p>
+        <p>Nothing feels like ::ffff. Also <Link href="/planets"><a>go here.</a></Link></p>
         <p>{config.host}:{config.port}</p>
         <ul>
           {planets.map(planet => (
