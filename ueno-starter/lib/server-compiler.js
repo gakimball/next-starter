@@ -43,6 +43,7 @@ module.exports = ({ dev = false }) => {
                     node: 'current',
                   },
                 }],
+                require.resolve('../babel'),
               ],
             },
           },

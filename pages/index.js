@@ -4,9 +4,9 @@ import React from 'react';
 import { inject, PropTypes as MobxPropTypes } from 'mobx-react';
 import getConfig from 'next/config';
 import Link from 'next/link';
-import Header from '../components/header';
-import Layout from '../components/layout';
-import withStores from '../stores';
+import Header from 'components/header';
+import Layout from 'components/layout';
+import withStores from 'stores';
 
 const { publicRuntimeConfig: config } = getConfig();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../static/ueno-logo.svg';
+import Logo from 'static/ueno-logo.svg';
 import s from './header.scss';
 
 export default () => (

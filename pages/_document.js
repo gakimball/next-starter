@@ -1,1 +1,1 @@
-export { default } from '../ueno-starter/document';
+export { default } from 'ueno-starter/document';
