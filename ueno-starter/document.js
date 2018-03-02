@@ -47,7 +47,7 @@ export default class UenoDocument extends Document {
    * Specifically, we use the nonce on Next.js's inline scripts, which we can't hash.
    */
   static propTypes = {
-    helmet: PropTypes.func.isRequired,
+    helmet: PropTypes.object.isRequired,
     InlineScript: PropTypes.func.isRequired,
     nonce: PropTypes.string.isRequired,
   }
