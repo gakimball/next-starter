@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
 const deepAssign = require('deep-assign');
+const pick = require('lodash/pick');
 const defaultConfig = require('./default-config');
 
 /**
@@ -109,12 +110,34 @@ const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
 });
 
 /**
- * Next.js plugin to insert default config values for the starter kit.
+ * Next.js plugin to insert default config values for the starter kit. Next.js allows config values
+ * to be defined in two buckets: public and server. One is visible to client and server, and one is
+ * visible to server only.
+ *
+ * Our starter kit puts values in both buckets to make things work. However, to simplify things
+ * for the user, they define all their config values in one object, and we sort them into the two
+ * buckets automatically. That way the user doesn't have to remember which of our config values
+ * go where.
+ *
  * @private
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  * @returns {Object} Modified Next.hs config.
  */
-const withDefaultConfig = (nextConfig = {}) => deepAssign({}, defaultConfig, nextConfig);
+const withDefaultConfig = (nextConfig = {}) => {
+  if (!nextConfig.ueno) {
+    return deepAssign({}, defaultConfig, nextConfig);
+  }
+
+  // Copy the user-provided config values into the correct spots
+  const serverConfigValues = Object.keys(defaultConfig.serverRuntimeConfig);
+  const publicConfigValues = Object.keys(defaultConfig.publicRuntimeConfig);
+  const runtimeConfig = {
+    serverRuntimeConfig: pick(nextConfig.ueno, serverConfigValues),
+    publicRuntimeConfig: pick(nextConfig.ueno, publicConfigValues),
+  };
+
+  return deepAssign({}, defaultConfig, runtimeConfig, nextConfig);
+};
 
 /**
  * Next.js plugin to enable service workers.
