@@ -31,9 +31,6 @@ This is the bare minimum you need for the boilerplate to work:
 ```
 - pages
   - index.js
-- server
-  - index.js
-next.config.js
 package.json
 ```
 
@@ -47,24 +44,6 @@ These commands are wrappers for the Next.js shell commands, with some extra stuf
 - `ueno-starter export`: export static version of app.
 
 ## Modules
-
-### Next Config
-
-Configures Next.js with all the bells and whistles of the starter kit, including:
-
-- Sass, PostCSS, and CSS Modules
-- SVG-to-JSX loader
-- Offline mode via service worker
-
-In `next.config.js`:
-
-```js
-const withUeno = require('@ueno/starter/next');
-
-module.exports = withUeno();
-```
-
-To add your own settings, pass them in as an object to the config function.
 
 ### Server
 
@@ -125,6 +104,16 @@ export default class IndexPage extends Component {
     return <div />;
   }
 }
+```
+
+## Configuration
+
+Configure your project by adding `app-config.js` to the root of your project. It's a module that exports an object. You can include any Next.js options here, or use Next.js plugins.
+
+```js
+const withSweetPlugin = require('next-sweet-plugin');
+
+module.exports = withSweetPlugin();
 ```
 
 ### Environment Variables
