@@ -21,6 +21,7 @@ Also includes more helpful things on top:
 - Service workers
 - Password protection
 - Google, Facebook, and Twitter analytics
+- Remote development
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
 
@@ -39,6 +40,7 @@ package.json
 These commands are wrappers for the Next.js shell commands, with some extra stuff sprinkled in.
 
 - `ueno-starter dev`: run app in development mode.
+  - `ueno-starter dev --remote`: run app in development mode, and allow the server to be accessed over the internet.
 - `ueno-starter build`: build app for production. Run this before deploying to a server.
 - `ueno-starter start`: run app in production mode.
 - `ueno-starter export`: export static version of app.
