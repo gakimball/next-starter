@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+
 const express = require('express');
 const next = require('next');
 const compression = require('compression');
@@ -6,10 +8,23 @@ const security = require('./lib/security');
 const basicAuth = require('./lib/basic-auth');
 const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
+const withUeno = require('./lib/next-config');
 const { default: getConfig } = require('next/config');
 
+let nextConfig;
+
+// Try to load a user config if it exists
+// A user-defined Next.js config is automatically decorated with the starter kit plugins
+try {
+  // @TODO This won't work when this is changed into a real library
+  // @TODO Watch app-config and reload
+  nextConfig = require('../app-config'); // eslint-disable-line import/no-unresolved
+} catch (err) {
+  nextConfig = {};
+}
+
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev, conf: withUeno(nextConfig) });
 const handle = app.getRequestHandler();
 const { serverRuntimeConfig: config } = getConfig();
 const host = process.env.HOST || 'localhost';

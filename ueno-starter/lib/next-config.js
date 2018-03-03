@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
 const deepAssign = require('deep-assign');
-const defaultConfig = require('./lib/default-config');
+const defaultConfig = require('./default-config');
 
 /**
  * Next.js plugin to apply a Sass loader.
