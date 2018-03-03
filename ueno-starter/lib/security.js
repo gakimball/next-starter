@@ -3,6 +3,11 @@ const hpp = require('hpp');
 const helmet = require('helmet');
 const compact = require('lodash/compact');
 
+/**
+ * Create a Content Security Policy config for Helmet, based on how the user's app is configured.
+ * @param {Object} config - App config.
+ * @returns {Object} CSP config.
+ */
 const createCsp = (config) => {
   const defaults = {
     directives: {
