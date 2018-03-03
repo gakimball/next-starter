@@ -7,7 +7,7 @@ const pick = require('lodash/pick');
 const defaultConfig = require('./default-config');
 
 /**
- * Next.js plugin to apply a Sass loader.
+ * Next.js plugin to apply a Sass loader, with PostCSS, CSS modules, and classnames.
  * @private
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  * @returns {Object} Modified Next.js config.
@@ -57,6 +57,7 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
     ];
 
     // Loader sequence used in development
+    // On the client we also need style-loader after the default set
     const devLoaders = isServer ? cssLoaders : ['style-loader', ...cssLoaders];
 
     config.module.rules.push({
@@ -73,6 +74,7 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
       ],
     });
 
+    // In production we need this plugin to output the final CSS file
     if (dev) {
       config.plugins.push(extractCSSPlugin);
     }
@@ -140,13 +142,14 @@ const withDefaultConfig = (nextConfig = {}) => {
 };
 
 /**
- * Next.js plugin to enable service workers.
+ * Next.js plugin to enable offline support via service workers. This plugin only functions when
+ * the app is built for production.
  * @private
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  * @returns {Object} Modified Next.hs config.
  */
 const withServiceWorker = (nextConfig = {}) => {
-  // Only add the plugin if it's been enabled and we're in production
+  // Only add the plugin if it's been enabled
   if (nextConfig.serverRuntimeConfig.serviceWorker) {
     return withOffline(nextConfig);
   }

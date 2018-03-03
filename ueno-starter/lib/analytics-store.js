@@ -1,8 +1,5 @@
 import Router from 'next/router';
 import ReactGA from 'react-ga';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig: config } = getConfig();
 
 /**
  * Store to handle analytics tracking. A pageview event is sent each time a page is loaded.
@@ -12,11 +9,14 @@ export default class AnalyticsStore {
 
   /**
    * Initialize the analytics store.
+   * @param {String} [gaId] - Google Analytics ID.
    */
-  constructor() {
+  constructor(gaId) {
+    this.gaId = gaId;
+
     if (typeof window !== 'undefined') {
-      if (config.gaId) {
-        ReactGA.initialize(config.gaId);
+      if (this.gaId) {
+        ReactGA.initialize(this.gaId);
       }
 
       // The router doesn't fire an event for the first page loaded from a server, so we do it
@@ -36,7 +36,7 @@ export default class AnalyticsStore {
    */
   track(url) {
     // Google Analytics
-    if (config.gaId) {
+    if (this.gaId) {
       ReactGA.set({ page: url });
       ReactGA.pageview(url);
     }

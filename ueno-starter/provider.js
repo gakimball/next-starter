@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'mobx-react';
+import getConfig from 'next/config';
 import AnalyticsStore from './lib/analytics-store';
+
+const { publicRuntimeConfig: config } = getConfig();
 
 /**
  * Create a decorator that adds MobX support to your page. If you're using MobX, you'll want to
@@ -20,7 +23,7 @@ export default (stores) => {
    * @constructor
    */
   function StoreContainer() {
-    this.analytics = new AnalyticsStore();
+    this.analytics = new AnalyticsStore(config.gaId);
 
     Object.entries(stores).forEach(([name, Store]) => {
       this[name] = new Store();
