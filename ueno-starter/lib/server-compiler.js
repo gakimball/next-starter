@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const ReloadServerPlugin = require('reload-server-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const chalk = require('chalk');
+
+let serverRanOnce = false;
 
 /**
  * Create a Webpack compiler for the server. It's not as complicated as the one used for the React
@@ -62,6 +65,16 @@ module.exports = ({ dev = false }) => {
       new ReloadServerPlugin({
         script: path.join(process.cwd(), '.server/index.js'),
       }),
+      function ServerWatchAlertPlugin() {
+        this.plugin('watch-run', (compilation, cb) => {
+          if (serverRanOnce) {
+            console.log(chalk.cyan('\nSever modified. Recompiling and reloading...\n')); // eslint-disable-line no-console
+          } else {
+            serverRanOnce = true;
+          }
+          cb();
+        });
+      },
     ];
   }
 
