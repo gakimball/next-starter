@@ -9,24 +9,12 @@ const security = require('./lib/security/middleware');
 const basicAuth = require('./lib/basic-auth');
 const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
-const withUeno = require('./lib/config/next');
 const hostEnv = require('./lib/host-env');
 const serverErrorHandler = require('./lib/server-error-handler');
-
-let nextConfig;
-
-// Try to load a user config if it exists
-// A user-defined Next.js config is automatically decorated with the starter kit plugins
-try {
-  // @TODO This won't work when this is changed into a real library
-  // @TODO Watch app-config and reload
-  nextConfig = require('../app-config'); // eslint-disable-line import/no-unresolved
-} catch (err) {
-  nextConfig = {};
-}
+const appConfig = require('./lib/config/app');
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev, conf: withUeno(nextConfig) });
+const app = next({ dev, conf: appConfig() });
 const handle = app.getRequestHandler();
 const { serverRuntimeConfig: config, publicRuntimeConfig: publicConfig } = getConfig();
 
@@ -53,7 +41,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   server.use(compression());
 
   // Enforce HTTPS (turned off by default)
-  if (!dev && process.env.ENFORCE_HTTPS) {
+  if (!app.dev && process.env.ENFORCE_HTTPS) {
     server.use(enforceHttps(hostEnv.HOST));
   }
 
@@ -63,7 +51,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   }
 
   // Allow the service worker initialization script to be served
-  if (!dev && config.serviceWorker) {
+  if (!app.dev && config.serviceWorker) {
     server.use(serviceWorker(app));
   }
 

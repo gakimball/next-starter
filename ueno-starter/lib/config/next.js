@@ -75,7 +75,7 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
     });
 
     // In production we need this plugin to output the final CSS file
-    if (dev) {
+    if (!dev) {
       config.plugins.push(extractCSSPlugin);
     }
 

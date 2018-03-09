@@ -2,12 +2,15 @@
 
 /* eslint-disable no-console */
 
+const nextBuild = require('next/dist/server/build');
+const nextExport = require('next/dist/server/export');
 const dotenv = require('dotenv');
 const meow = require('meow');
 const execa = require('execa');
 const ngrok = require('ngrok');
 const serverCompiler = require('../lib/server-compiler');
 const hostEnv = require('../lib/host-env');
+const appConfig = require('../lib/config/app');
 
 dotenv.config();
 
@@ -36,7 +39,7 @@ switch (cli.input[0]) {
     const compiler = serverCompiler({ dev: false });
 
     Promise.all([
-      execa('next', ['build'], { stdio: 'inherit' }),
+      nextBuild.default(process.cwd(), appConfig()),
       compiler.run(),
     ]).then(() => {
       console.log('> Done building.');
@@ -69,7 +72,7 @@ switch (cli.input[0]) {
   }
   // Export to static site
   case 'export': {
-    execa('next', ['export'], { stdio: 'inherit' });
+    nextExport.default(process.cwd(), appConfig());
 
     break;
   }
