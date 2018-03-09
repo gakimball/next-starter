@@ -1,3 +1,5 @@
+const hostEnv = require('../host-env');
+
 /**
  * Cast a string to a boolean. This is used to convert environment variables, which are always
  * strings, into booleans.
@@ -14,19 +16,6 @@ const toBoolean = (val) => {
   if (val === 'false') return false;
   if (!val) return false;
   return true;
-};
-
-/**
- * Get the default base URL, which either pulls the host/port from the environment variables, or
- * uses defaults.
- * @private
- * @returns {String} Base URL.
- */
-const defaultBaseUrl = () => {
-  const host = process.env.HOST || 'localhost';
-  const port = process.env.PORT || 3000;
-
-  return `http://${host}:${port}`;
 };
 
 /**
@@ -89,6 +78,6 @@ module.exports = {
     // Enable Google Analytics tracking
     gaId: '',
     // Base URL for server requests
-    baseUrl: process.env.BASE_URL || defaultBaseUrl(),
+    baseUrl: process.env.BASE_URL || `http://${hostEnv.HOST}:${hostEnv.PORT}`,
   },
 };

@@ -7,6 +7,7 @@ const meow = require('meow');
 const execa = require('execa');
 const ngrok = require('ngrok');
 const serverCompiler = require('../lib/server-compiler');
+const hostEnv = require('../lib/host-env');
 
 dotenv.config();
 
@@ -51,7 +52,7 @@ switch (cli.input[0]) {
     const compiler = serverCompiler({ dev: true });
 
     if (cli.flags.remote) {
-      ngrok.connect(process.env.PORT || 3000, (err, url) => {
+      ngrok.connect(hostEnv.PORT, (err, url) => {
         if (err) {
           throw err;
         }

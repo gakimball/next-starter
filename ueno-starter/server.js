@@ -10,6 +10,7 @@ const basicAuth = require('./lib/basic-auth');
 const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
 const withUeno = require('./lib/config/next');
+const hostEnv = require('./lib/host-env');
 
 let nextConfig;
 
@@ -26,9 +27,7 @@ try {
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev, conf: withUeno(nextConfig) });
 const handle = app.getRequestHandler();
-const { serverRuntimeConfig: config } = getConfig();
-const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 3000;
+const { serverRuntimeConfig: config, publicRuntimeConfig: publicConfig } = getConfig();
 
 /**
  * Create an Express server with security middleware that serves your React app. The server can
@@ -54,7 +53,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
 
   // Enforce HTTPS (turned off by default)
   if (!dev && process.env.ENFORCE_HTTPS) {
-    server.use(enforceHttps(host));
+    server.use(enforceHttps(hostEnv.HOST));
   }
 
   // Require a username and password to see anything (turned off by default)
@@ -79,12 +78,12 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
     handle(req, res, parsedUrl);
   });
 
-  server.listen(port, (err) => {
+  server.listen(hostEnv.PORT, (err) => {
     if (err) {
       throw err;
     }
 
-    console.log(`> Ready on http://${host}:${port}`); // eslint-disable-line no-console
+    console.log(`> Ready on ${publicConfig.baseUrl}`); // eslint-disable-line no-console
 
     if (process.env.REMOTE_URL) {
       console.log(`> Ready remotely on ${process.env.REMOTE_URL}`); // eslint-disable-line no-console
