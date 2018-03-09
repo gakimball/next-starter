@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import NextDocument, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
-import cspHeaderHash from './lib/csp-header-hash';
-import inlineScript from './lib/inline-script';
-import { facebookPixel, twitterPixel } from './lib/analytics-scripts';
+import cspHeaderHash from './lib/security/csp-header-hash';
+import inlineScript from './lib/security/inline-script';
+import { facebookPixel, twitterPixel } from './lib/analytics/scripts';
 
 const { serverRuntimeConfig: config } = getConfig();
 const dev = process.env.NODE_ENV !== 'production';

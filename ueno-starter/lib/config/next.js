@@ -4,7 +4,7 @@ const withOffline = require('next-offline');
 const compose = require('compose-function');
 const deepAssign = require('deep-assign');
 const pick = require('lodash/pick');
-const defaultConfig = require('./default-config');
+const defaultConfig = require('./defaults');
 
 /**
  * Next.js plugin to apply a Sass loader, with PostCSS, CSS modules, and classnames.
@@ -38,7 +38,7 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
         options: {
           ident: 'postcss',
           config: {
-            path: path.join(__dirname, 'lib/postcss.config.js'),
+            path: path.join(__dirname, './postcss.config.js'),
           },
           plugins: () => [
             require('autoprefixer'),

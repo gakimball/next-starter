@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+const React = require('react');
+const PropTypes = require('prop-types');
 
 /**
  * React component to create an inline script. When the script is created, it's contents are hashed,
@@ -12,24 +12,28 @@ import PropTypes from 'prop-types';
  *
  * @private
  */
-export default hash => class InlineScript extends Component {
+module.exports = (hash) => {
+  class InlineScript extends React.Component {
+
+    render() {
+      const { body } = this.props;
+
+      return (
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{ __html: hash(body) }}
+        />
+      );
+    }
+  }
 
   /**
    * Prop types for `<InlineScript />`.
    * @prop {String} body - Contents of script.
    */
-  static propTypes = {
+  InlineScript.propTypes = {
     body: PropTypes.string.isRequired,
-  }
+  };
 
-  render() {
-    const { body } = this.props;
-
-    return (
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{ __html: hash(body) }}
-      />
-    );
-  }
+  return InlineScript;
 };

@@ -4,12 +4,12 @@ const express = require('express');
 const next = require('next');
 const compression = require('compression');
 const url = require('url');
-const security = require('./lib/security');
+const { default: getConfig } = require('next/config');
+const security = require('./lib/security/middleware');
 const basicAuth = require('./lib/basic-auth');
 const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
-const withUeno = require('./lib/next-config');
-const { default: getConfig } = require('next/config');
+const withUeno = require('./lib/config/next');
 
 let nextConfig;
 

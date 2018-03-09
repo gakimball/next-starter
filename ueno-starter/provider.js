@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'mobx-react';
 import getConfig from 'next/config';
-import AnalyticsStore from './lib/analytics-store';
+import AnalyticsStore from './lib/analytics/store';
 
 const { publicRuntimeConfig: config } = getConfig();
 

@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 /**
  * Create a function which has access to an Express response object.
@@ -6,7 +6,7 @@ import crypto from 'crypto';
  * @param {Object} response Express response.
  * @returns {HashFunction} Hashing function.
  */
-export default response =>
+module.exports = response =>
   /**
    * Modifies the `content-security-policy` header of the response by adding a sha256 hash of the
    * input to the `script-src` directive.
