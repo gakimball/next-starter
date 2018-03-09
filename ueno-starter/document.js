@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import NextDocument, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
-import cspHeaderHash from './lib/security/csp-header-hash';
 import inlineScript from './lib/security/inline-script';
 import { facebookPixel, twitterPixel } from './lib/analytics/scripts';
 
@@ -27,13 +26,10 @@ export default class Document extends NextDocument {
     const documentProps = await super.getInitialProps(...args);
     const { res } = args[0];
 
-    // Create a function we can use to hash inline scripts and add those scripts to the CSP
-    const hashingFunction = cspHeaderHash(res);
-
     return {
       ...documentProps,
       helmet: Helmet.renderStatic(),
-      InlineScript: inlineScript(hashingFunction),
+      InlineScript: inlineScript(res),
       nonce: res.locals.nonce,
     };
   }
