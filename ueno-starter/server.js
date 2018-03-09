@@ -11,6 +11,7 @@ const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
 const withUeno = require('./lib/config/next');
 const hostEnv = require('./lib/host-env');
+const serverErrorHandler = require('./lib/server-error-handler');
 
 let nextConfig;
 
@@ -91,4 +92,4 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   });
 
   return server;
-});
+}).catch(serverErrorHandler);
