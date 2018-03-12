@@ -37,8 +37,9 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   server.use(...security(config));
 
   // Gzip compress the responses.
-  // @TODO: Resolve https://github.com/zeit/next.js/issues/3778
-  server.use(compression());
+  if (!app.dev) {
+    server.use(compression());
+  }
 
   // Enforce HTTPS (turned off by default)
   if (!app.dev && process.env.ENFORCE_HTTPS) {
