@@ -4,8 +4,5 @@ module.exports = {
   ],
   plugins: [
     'transform-decorators-legacy',
-    ['module-resolver', {
-      root: './',
-    }],
   ],
 };

@@ -2,4 +2,13 @@ extends: "@ueno"
 parser: babel-eslint
 settings:
   import/resolver:
-    babel-module:
+    webpack:
+      config:
+        resolve:
+          extensions:
+            - .js
+            - .jsx
+            - .json
+          modules:
+            - node_modules
+            - ./

@@ -163,6 +163,25 @@ const withServiceWorker = (nextConfig = {}) => {
   return nextConfig;
 };
 
-const withUeno = compose(withServiceWorker, withSvgLoader, withSass, withDefaultConfig);
+const withRootImport = (nextConfig = {}) => ({
+  ...nextConfig,
+  webpack(config, options) {
+    config.resolve.modules.push('./');
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options);
+    }
+
+    return config;
+  },
+});
+
+const withUeno = compose(
+  withServiceWorker,
+  withSvgLoader,
+  withSass,
+  withRootImport,
+  withDefaultConfig,
+);
 
 module.exports = withUeno;

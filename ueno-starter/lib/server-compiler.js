@@ -55,7 +55,7 @@ module.exports = ({ dev = false }) => {
       ],
     },
     resolve: {
-      modules: [path.join(process.cwd(), 'server'), 'node_modules'],
+      modules: ['node_modules', './'],
     },
     node: false,
   };
