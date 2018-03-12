@@ -4,6 +4,12 @@
 const path = require('path');
 const withUeno = require('./next');
 
+/**
+ * Generate the project config by combinging the developer's config from `app-config.js` (if it
+ * exists) with the built-in starter kit config.
+ * @private
+ * @returns {Object} Next.js config.
+ */
 module.exports = () => {
   let appConfig;
 

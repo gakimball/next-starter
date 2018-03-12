@@ -1,3 +1,9 @@
+/**
+ * This is where all the client-side magic of the starter kit happens. The functions below modify
+ * the default behavior of Next.js to add fancy new features. Each feature should be its own
+ * function.
+ */
+
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const withOffline = require('next-offline');
