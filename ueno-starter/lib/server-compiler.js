@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ReloadServerPlugin = require('reload-server-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const chalk = require('chalk');
+const hostEnv = require('./host-env');
 
 let serverRanOnce = false;
 
@@ -68,13 +69,19 @@ module.exports = ({ dev = false }) => {
       function ServerWatchAlertPlugin() {
         this.plugin('watch-run', (compilation, cb) => {
           if (serverRanOnce) {
-            console.log(chalk.cyan('\nSever modified. Recompiling and reloading...\n')); // eslint-disable-line no-console
+            console.log('\n> Server modified. Recompiling and reloading...\n'); // eslint-disable-line no-console
           } else {
             serverRanOnce = true;
           }
           cb();
         });
       },
+      new FriendlyErrorsPlugin({
+        clearConsole: 'false',
+        compilationSuccessInfo: {
+          messages: [`View your app at ${hostEnv.HOST}:${hostEnv.PORT}`],
+        },
+      }),
     ];
   }
 

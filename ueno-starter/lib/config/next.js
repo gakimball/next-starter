@@ -6,6 +6,7 @@
 
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const withOffline = require('next-offline');
 const compose = require('compose-function');
 const deepAssign = require('deep-assign');
@@ -176,11 +177,39 @@ const withRootImport = (nextConfig = {}) => ({
   },
 });
 
+/**
+ * Next.js plugin to modify the friendly errors plugin used by Next.js. We modify it by passing
+ * `clearConsole: false` to the plugin, which prevents it from wiping the console on every
+ * re-compile. We do this because the starter kit runs two webpack bundles that both use this
+ * plugin, and if they're both clearing the console then they're interfering with each others'
+ * logs.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.hs config.
+ */
+const withFriendlierErrors = (nextConfig = {}) => ({
+  ...nextConfig,
+  webpack(config, options) {
+    const { dev, isServer } = options;
+
+    // Remove the default instance of the plugin
+    config.plugins = config.plugins.filter(plugin => !(plugin instanceof FriendlyErrorsPlugin));
+
+    // Re-add it with custom options
+    if (dev && !isServer) {
+      config.plugins.push(new FriendlyErrorsPlugin({ clearConsole: false }));
+    }
+
+    return config;
+  },
+});
+
 const withUeno = compose(
   withServiceWorker,
   withSvgLoader,
   withSass,
   withRootImport,
+  withFriendlierErrors,
   withDefaultConfig,
 );
 
