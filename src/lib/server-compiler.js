@@ -34,6 +34,7 @@ module.exports = ({ dev = false }) => {
     },
     target: 'node',
     externals: [nodeExternals()],
+    devtool: dev ? 'cheap-module-eval-source-map' : false,
     module: {
       rules: [
         {
@@ -82,6 +83,7 @@ module.exports = ({ dev = false }) => {
           messages: [`View your app at ${hostEnv.HOST}:${hostEnv.PORT}`],
         },
       }),
+      new webpack.IgnorePlugin(/^\.\.\/server$/, /default-server/),
     ];
   }
 

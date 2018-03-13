@@ -61,4 +61,7 @@ typings/
 .next
 .server
 
+# Production files
+dist
+
 .DS_Store

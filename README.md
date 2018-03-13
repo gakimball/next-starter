@@ -1,6 +1,6 @@
 # Next.js Starter
 
-Proof-of-concept that layers the feature's of Ueno's [starter kit](https://github.com/ueno-llc/starter-kit-universally) on top of [Next.js](https://github.com/zeit/next.js).
+Proof-of-concept that layers the features of Ueno's [starter kit](https://github.com/ueno-llc/starter-kit-universally) on top of [Next.js](https://github.com/zeit/next.js).
 
 Includes all the things you get from Next out of the box, including:
 
@@ -24,6 +24,17 @@ Also includes more helpful things on top:
 - Remote development
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
+
+## Table of Contents
+
+- [File Structure](#file-structure)
+- [Shell Commands](#shell-commands)
+- [Modules](#modules)
+  - [Server](#server)
+  - [Document](#document)
+  - [Provider](#provider)
+- [Configuration](#configuration)
+- [Table of Contents](#table-of-contents)
 
 ## File Structure
 

@@ -22,16 +22,17 @@ export default class Document extends NextDocument {
    * access the Express request and response here, among other things.
    * @private
    */
-  static async getInitialProps(...args) {
-    const documentProps = await super.getInitialProps(...args);
-    const { res } = args[0];
+  static getInitialProps(...args) {
+    return super.getInitialProps(...args).then((documentProps) => {
+      const { res } = args[0];
 
-    return {
-      ...documentProps,
-      helmet: Helmet.renderStatic(),
-      InlineScript: inlineScript(res),
-      nonce: res.locals.nonce,
-    };
+      return {
+        ...documentProps,
+        helmet: Helmet.renderStatic(),
+        InlineScript: inlineScript(res),
+        nonce: res.locals.nonce,
+      };
+    });
   }
 
   /**

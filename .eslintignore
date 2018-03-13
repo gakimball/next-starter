@@ -1,0 +1,6 @@
+test
+dist
+./babel.js
+./document.js
+./provider.js
+./server.js
