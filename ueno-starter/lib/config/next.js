@@ -19,7 +19,8 @@ const defaultConfig = require('./defaults');
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  * @returns {Object} Modified Next.js config.
  */
-const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
+const withSass = (nextConfig = {}) => ({
+  ...nextConfig,
   webpack: (config, options) => {
     const { dev, isServer } = options;
 
@@ -100,7 +101,8 @@ const withSass = (nextConfig = {}) => Object.assign({}, nextConfig, {
  * @param {Object} [nextConfig={}] - Next.js config to decorate.
  * @returns {Object} Modified Next.hs config.
  */
-const withSvgLoader = (nextConfig = {}) => Object.assign({}, nextConfig, {
+const withSvgLoader = (nextConfig = {}) => ({
+  ...nextConfig,
   webpack(config, options) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -164,6 +166,13 @@ const withServiceWorker = (nextConfig = {}) => {
   return nextConfig;
 };
 
+/**
+ * Next.js plugin to define the current working directory (which is also the project root) as
+ * an import path. This allows us to write absolute import paths and not messs around with `../..`.
+ * @private
+ * @param {Object} [nextConfig={}] - Next.js config to decorate.
+ * @returns {Object} Modified Next.hs config.
+ */
 const withRootImport = (nextConfig = {}) => ({
   ...nextConfig,
   webpack(config, options) {
@@ -204,6 +213,9 @@ const withFriendlierErrors = (nextConfig = {}) => ({
   },
 });
 
+// These functions run in the reverse order of what you see here. The order doesn't really matter,
+// other than having `withDefaultConfig` first, because other plugins may reference starter kit
+// config values
 const withUeno = compose(
   withServiceWorker,
   withSvgLoader,
