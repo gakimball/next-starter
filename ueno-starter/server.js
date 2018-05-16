@@ -1,13 +1,11 @@
-/* eslint-disable import/no-dynamic-require */
-
 const express = require('express');
 const next = require('next');
 const compression = require('compression');
+const forceHttps = require('express-force-https');
 const url = require('url');
 const { default: getConfig } = require('next/config');
 const security = require('./lib/security/middleware');
 const basicAuth = require('./lib/basic-auth');
-const enforceHttps = require('./lib/enforce-https');
 const serviceWorker = require('./lib/service-worker');
 const hostEnv = require('./lib/host-env');
 const serverErrorHandler = require('./lib/server-error-handler');
@@ -43,7 +41,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
 
   // Enforce HTTPS (turned off by default)
   if (!app.dev && process.env.ENFORCE_HTTPS) {
-    server.use(enforceHttps(hostEnv.HOST));
+    server.use(forceHttps);
   }
 
   // Require a username and password to see anything (turned off by default)
