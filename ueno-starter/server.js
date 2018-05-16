@@ -2,10 +2,10 @@ const express = require('express');
 const next = require('next');
 const compression = require('compression');
 const forceHttps = require('express-force-https');
+const basicAuth = require('express-basic-auth');
 const url = require('url');
 const { default: getConfig } = require('next/config');
 const security = require('./lib/security/middleware');
-const basicAuth = require('./lib/basic-auth');
 const serviceWorker = require('./lib/service-worker');
 const hostEnv = require('./lib/host-env');
 const serverErrorHandler = require('./lib/server-error-handler');
@@ -46,7 +46,17 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
 
   // Require a username and password to see anything (turned off by default)
   if (process.env.PASSWORD_PROTECT) {
-    server.use(basicAuth(process.env.PASSWORD_PROTECT));
+    // This config value can have the format `user:pass`, or `pass`
+    const [user, password] = process.env.PASSWORD_PROTECT.split(':');
+    const passwordOnly = password === undefined;
+
+    server.use(basicAuth({
+      users: {
+        [passwordOnly ? '' : user]: passwordOnly ? user : password,
+      },
+      challenge: true,
+      realm: 'ueno',
+    }));
   }
 
   // Allow the service worker initialization script to be served
