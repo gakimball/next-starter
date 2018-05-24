@@ -40,7 +40,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   }
 
   // Enforce HTTPS (turned off by default)
-  if (!app.dev && process.env.ENFORCE_HTTPS) {
+  if (!app.dev && config.enforceHttps) {
     server.use(forceHttps);
   }
 

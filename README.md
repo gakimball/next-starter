@@ -125,9 +125,7 @@ Place these in a `.env` at your project root to use them.
 - `HOST`: hostname for server. Defaults to `localhost`.
 - `PORT`: port to serve on. Defaults to `3000`.
 - `BASE_URL`: URL of server. Use this to make server requests to the correct host. Defaults to `http://[HOST]:[PORT]`, borrowing from the `HOST` and `PORT` variables.
-- `ENFORCE_HTTPS`: redirect all HTTP requests to HTTPS. Defaults to disabled.
-- `PASSWORD_PROTECT`: gate all server access with a login form. Use `username:password` (with a colon) to require a username/password combo, or use `password` (without a colon) to just require a password.
-- `REMOTE_DEVTOOLS`: enable the display of devtools in production mode. Defaults to disabled.
+- `PASSWORD_PROTECT`: gate all server access with a login form. Use `username:password` to set a username/password combo.
 
 # License
 

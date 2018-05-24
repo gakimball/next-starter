@@ -1,24 +1,6 @@
 const hostEnv = require('../host-env');
 
 /**
- * Cast a string to a boolean. This is used to convert environment variables, which are always
- * strings, into booleans.
- *   - `true` and `1` are considered true.
- *   - `false` and falsey values are considered false.
- *   - Anything else is considered true.
- *
- * @private
- * @param {?String} [val] - Value to cast.
- * @returns {Boolean} Casted boolean.
- */
-const toBoolean = (val) => {
-  if (val === 'true' || val === '1') return true;
-  if (val === 'false') return false;
-  if (!val) return false;
-  return true;
-};
-
-/**
  * Default configuration values. These are deeply merged with any user-supplied values from
  * `app-config.js`.
  * @private
@@ -55,6 +37,8 @@ module.exports = {
     csp: {},
     // @TODO Show OS notifications
     notifier: 'warn',
+    // Redirect HTTP to HTTPS
+    enforceHttps: false,
   },
   /**
    * Config values available to the server and the client. Store values here that are permissable
@@ -73,8 +57,8 @@ module.exports = {
         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       ],
     },
-    // @TODO Enable Heroku dev tools
-    remoteDevtools: toBoolean(process.env.REMOTE_DEVTOOLS),
+    // @TODO Add dev tools
+    remoteDevtools: false,
     // Enable Google Analytics tracking
     gaId: '',
     // Base URL for server requests
