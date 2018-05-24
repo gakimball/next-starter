@@ -31,8 +31,6 @@ module.exports = {
     facebookPixel: null,
     // Enable Twitter tracking
     twitterPixel: null,
-    // Enable loading resources from Google Fonts
-    googleFonts: true,
     // Add to default Content Security Policy
     csp: {},
     // @TODO Show OS notifications

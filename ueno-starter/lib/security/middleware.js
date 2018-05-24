@@ -34,10 +34,6 @@ const createCsp = (config) => {
         // Allow self-hosted fonts to be loaded
         "'self'",
         'data:',
-
-        // Allow fonts from Google Fonts to be loaded
-        config.googleFonts && 'fonts.googleapis.com/css',
-        config.googleFonts && 'fonts.gstatic.com',
       ]),
       objectSrc: ["'self'"],
       mediaSrc: ["'self'"],
@@ -67,9 +63,6 @@ const createCsp = (config) => {
         // Webpack generates JS that loads our CSS, so this is needed:
         "'unsafe-inline'",
         'blob:',
-
-        // Allow CSS from Google Fonts to be loaded
-        config.googleFonts && 'fonts.googleapis.com',
       ],
     },
   };
