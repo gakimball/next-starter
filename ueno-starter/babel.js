@@ -1,8 +1,6 @@
-module.exports = {
-  presets: [
-    'stage-0',
-  ],
+module.exports = () => ({
   plugins: [
+    'transform-class-properties',
     'transform-decorators-legacy',
   ],
-};
+});

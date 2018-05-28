@@ -34,6 +34,7 @@ module.exports = ({ dev = false }) => {
     },
     target: 'node',
     externals: [nodeExternals()],
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     module: {
       rules: [
         {
