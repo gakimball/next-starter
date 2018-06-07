@@ -1,6 +1,6 @@
 module.exports = () => ({
   plugins: [
-    'transform-class-properties',
     'transform-decorators-legacy',
+    'transform-class-properties',
   ],
 });

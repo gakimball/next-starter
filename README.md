@@ -77,33 +77,60 @@ To change the wrapper HTML around a React app, Next.js allows you to define a fi
 export { Document } from '@ueno/starter/document';
 ```
 
-### Provider
+### Store
 
-To make MobX work, we have to wrap each page in our app with a store provider. You can't do that in `_document.js` because that HTML is all static. So instead, we do it on each page individually.
-
-First, we make some stores and use the starter kit's `provider()` function:
+To add MobX stores, first assemble all of your store classes in one place like this:
 
 ```js
-import provider from '@ueno/starter/provider';
-import UIStore from './ui';
-import PlanetsStore from './planets';
+import store from '@ueno/starter/store';
+import PlanetsStore from './planets-store';
+import KittensStore from './kittens-store';
 
-export default provider({
-  ui: UIStore,
+export default store({
   planets: PlanetsStore,
+  kittens: KittensStore,
 });
 ```
 
-Then we import the above file and use it as a decorator:
+The above function creates a decorator function. Now, create the file `pages/_app.js` if you don't already have one, and decorate the `<App />` component.
+
+```js
+import stores from './stores';
+
+@stores
+export default class App extends NextApp {
+  static async getInitialProps({ Component, ctx }) {
+    return {
+      pageProps: Component.getInitialProps
+        ? await Component.getInitialProps(ctx)
+        : {},
+    };
+  }
+
+  render() {
+    const { Component, pageProps } = this.props;
+
+    return (
+      <Container>
+        <Component {...pageProps} />
+      </Container>
+    );
+  }
+}
+```
+
+If you want to do some MobX stuff before a page renders, you can reference any MobX store in the `getInitialProps()` method of a page.
 
 ```js
 import React, { Component } from 'react';
-import provide from '../stores';
 
-@provide
-export default class IndexPage extends Component {
+export default class Index extends Component {
+  static async getInitialProps({ mobxStores }) {
+    await mobxStores.planets.fetch();
+  }
+
   render() {
-    return <div />;
+    // ...
   }
 }
 ```

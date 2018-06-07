@@ -1,27 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React from 'react';
-import { inject, PropTypes as MobxPropTypes } from 'mobx-react';
+import { inject } from 'mobx-react';
+import PropTypes from 'prop-types';
 import getConfig from 'next/config';
 import Link from 'next/link';
 import Header from 'components/header';
 import Layout from 'components/layout';
-import withStores from 'stores';
 
-const { publicRuntimeConfig: config } = getConfig();
-
-@withStores
 @inject(stores => ({
-  planets: stores.planets.planets,
+  planets: stores.planets.planets.slice(),
 }))
 export default class Index extends React.Component {
 
+  static async getInitialProps({ mobxStores }) {
+    await mobxStores.planets.addPlanet('Not Pluto');
+  }
+
   static propTypes = {
-    planets: MobxPropTypes.observableArray.isRequired, // eslint-disable-line react/no-typos
+    planets: PropTypes.array,
+  }
+
+  static defaultProps = {
+    planets: [],
   }
 
   render() {
     const { planets } = this.props;
+    const { publicRuntimeConfig: config } = getConfig();
 
     return (
       <Layout title="Home!!">

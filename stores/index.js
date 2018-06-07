@@ -1,15 +1,24 @@
-import { extendObservable } from 'mobx';
-import provider from 'ueno-starter/provider';
+import { observable, decorate, action } from 'mobx';
+import store from 'ueno-starter/store';
 
 class Planets {
 
-  constructor() {
-    extendObservable(this, {
-      planets: ['Earth', 'Mars', 'Jupiter'],
-    });
+  planets = ['Earth', 'Mars', 'Jupiter']
+
+  async addPlanet(planet) {
+    this.planets.push(planet);
   }
 }
 
-export default provider({
+decorate(Planets, {
+  planets: observable,
+  addPlanet: action.bound,
+});
+
+if (typeof window !== 'undefined') {
+  window.Planets = Planets;
+}
+
+export default store({
   planets: Planets,
 });
