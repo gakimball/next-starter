@@ -25,12 +25,15 @@ Also includes more helpful things on top:
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
 
+**Still a work in progress; doesn't work as a library yet.** Use `npm run dev` to run the example app.
+
 ## File Structure
 
 This is the bare minimum you need for the boilerplate to work:
 
 ```
 - pages
+  - _document.js
   - index.js
 package.json
 ```
@@ -45,114 +48,9 @@ These commands are wrappers for the Next.js shell commands, with some extra stuf
 - `ueno-starter start`: run app in production mode.
 - `ueno-starter export`: export static version of app.
 
-## Modules
+## Documentation
 
-### Server
-
-Starts a preconfigured Express sever with Next.
-
-```js
-import server from '@ueno/starter/server';
-
-server();
-```
-
-You can tack on extra things to the server before it starts.
-
-```js
-import server from '@ueno/starter/server';
-import bodyParser from 'body-parser';
-
-server(app => {
-  app.use(bodyParser);
-  return app;
-});
-```
-
-### Document
-
-To change the wrapper HTML around a React app, Next.js allows you to define a file `/pages/_document.js`. This starter kit includes a pre-made document that adds necessary stuff like CSS, helmet, config values, and so on.
-
-```js
-export { Document } from '@ueno/starter/document';
-```
-
-### Store
-
-To add MobX stores, first assemble all of your store classes in one place like this:
-
-```js
-import store from '@ueno/starter/store';
-import PlanetsStore from './planets-store';
-import KittensStore from './kittens-store';
-
-export default store({
-  planets: PlanetsStore,
-  kittens: KittensStore,
-});
-```
-
-The above function creates a decorator function. Now, create the file `pages/_app.js` if you don't already have one, and decorate the `<App />` component.
-
-```js
-import stores from './stores';
-
-@stores
-export default class App extends NextApp {
-  static async getInitialProps({ Component, ctx }) {
-    return {
-      pageProps: Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : {},
-    };
-  }
-
-  render() {
-    const { Component, pageProps } = this.props;
-
-    return (
-      <Container>
-        <Component {...pageProps} />
-      </Container>
-    );
-  }
-}
-```
-
-If you want to do some MobX stuff before a page renders, you can reference any MobX store in the `getInitialProps()` method of a page.
-
-```js
-import React, { Component } from 'react';
-
-export default class Index extends Component {
-  static async getInitialProps({ mobxStores }) {
-    await mobxStores.planets.fetch();
-  }
-
-  render() {
-    // ...
-  }
-}
-```
-
-## Configuration
-
-Configure your project by adding `app-config.js` to the root of your project. It's a module that exports an object. You can include any Next.js options here, or use Next.js plugins.
-
-```js
-const withSweetPlugin = require('next-sweet-plugin');
-
-module.exports = withSweetPlugin();
-```
-
-### Environment Variables
-
-Place these in a `.env` at your project root to use them.
-
-- `HOST`: hostname for server. Defaults to `localhost`.
-- `PORT`: port to serve on. Defaults to `3000`.
-- `BASE_URL`: URL of server. Use this to make server requests to the correct host. Defaults to `http://[HOST]:[PORT]`, borrowing from the `HOST` and `PORT` variables.
-- `PASSWORD_PROTECT`: gate all server access with a login form. Use `username:password` to set a username/password combo.
+[Read the documentation](docs/)
 
 # License
 

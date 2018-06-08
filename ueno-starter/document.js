@@ -60,7 +60,7 @@ export default class Document extends NextDocument {
     const { htmlAttributes, bodyAttributes, ...headAttributes } = helmet;
 
     return (
-      <html {...htmlAttributes.toComponent()} className="no-js">
+      <html lang="en" {...htmlAttributes.toComponent()} className="no-js">
 
         <Head>
 

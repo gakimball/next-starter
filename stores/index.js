@@ -15,10 +15,6 @@ decorate(Planets, {
   addPlanet: action.bound,
 });
 
-if (typeof window !== 'undefined') {
-  window.Planets = Planets;
-}
-
 export default store({
   planets: Planets,
 });

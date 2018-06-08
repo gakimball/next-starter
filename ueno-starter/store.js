@@ -78,6 +78,7 @@ export default (storeList = {}) => App => class MobX extends Component {
     initialStoreState: {},
   }
 
+  // Hydrate the store with the initial state from `getInitialProps`
   stores = getStore(storeList, this.props.initialStoreState)
 
   render() {
