@@ -50,7 +50,7 @@ These commands are wrappers for the Next.js shell commands, with some extra stuf
 
 ## Documentation
 
-[Read the documentation](docs/)
+[Read the documentation](ueno-starter/docs/)
 
 # License
 
