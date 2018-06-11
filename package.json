@@ -39,6 +39,7 @@
     "mobx-react": "^5.1.2",
     "next": "^6.0.3",
     "next-offline": "^2.7.1",
+    "next-routes": "^1.4.2",
     "ngrok": "^3.0.1",
     "postcss-csso": "^3.0.0",
     "prop-types": "^15.6.1",

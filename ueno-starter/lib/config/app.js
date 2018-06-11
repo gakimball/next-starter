@@ -21,6 +21,7 @@ module.exports = () => {
 
     // @TODO When this is converted into an actual library, it won't be bundled with Webpack and
     // this won't be necessary
+    // @TODO Catch errors with loading the config file
     appConfig = __non_webpack_require__(configPath);
   } catch (err) {
     appConfig = {};

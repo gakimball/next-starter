@@ -31,6 +31,8 @@ module.exports = {
         'es6',
       ],
     },
+    // Enable next-routes
+    routes: null,
     // Enable offline support via service worker
     serviceWorker: true,
     // Enable Twitter tracking

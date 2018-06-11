@@ -11,6 +11,7 @@ const withOffline = require('next-offline');
 const compose = require('compose-function');
 const deepAssign = require('deep-assign');
 const pick = require('lodash/pick');
+const omit = require('lodash/omit');
 const defaultConfig = require('./defaults');
 
 /**
@@ -143,11 +144,15 @@ const withDefaultConfig = (nextConfig = {}) => {
   const serverConfigValues = Object.keys(defaultConfig.serverRuntimeConfig);
   const publicConfigValues = Object.keys(defaultConfig.publicRuntimeConfig);
   const runtimeConfig = {
-    serverRuntimeConfig: pick(nextConfig.ueno, serverConfigValues),
+    serverRuntimeConfig: pick(omit(nextConfig.ueno, ['routes']), serverConfigValues),
     publicRuntimeConfig: pick(nextConfig.ueno, publicConfigValues),
   };
+  const config = deepAssign({}, defaultConfig, runtimeConfig, nextConfig);
 
-  return deepAssign({}, defaultConfig, runtimeConfig, nextConfig);
+  // @TODO Find a more elegant way to insert this value--it can't be deep merged
+  config.serverRuntimeConfig.routes = nextConfig.ueno.routes;
+
+  return config;
 };
 
 /**

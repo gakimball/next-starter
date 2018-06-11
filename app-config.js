@@ -3,5 +3,6 @@ module.exports = {
     helmet: {
       titleTemplate: '%s - STARTER KIT!!',
     },
+    routes: require('./routes'),
   },
 };

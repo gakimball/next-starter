@@ -13,7 +13,6 @@ const appConfig = require('./lib/config/app');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev, conf: appConfig() });
-const handle = app.getRequestHandler();
 const { serverRuntimeConfig: config, publicRuntimeConfig: publicConfig } = getConfig();
 
 /**
@@ -69,12 +68,20 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   // catches every unhandled request.
   decorate(server);
 
-  // All non-API requests go to Next.js
-  server.get('*', (req, res) => {
-    const parsedUrl = url.parse(req.url, true);
+  if (config.routes) {
+    const handle = config.routes.getRequestHandler(app);
 
-    handle(req, res, parsedUrl);
-  });
+    server.use(handle);
+  } else {
+    const handle = app.getRequestHandler();
+
+    // All non-API requests go to Next.js
+    server.get('*', (req, res) => {
+      const parsedUrl = url.parse(req.url, true);
+
+      handle(req, res, parsedUrl);
+    });
+  }
 
   server.listen(hostEnv.PORT, (err) => {
     if (err) {
