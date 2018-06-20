@@ -12,7 +12,8 @@
   "scripts": {
     "build": "babel src/ -d lib/",
     "test": "eslint '**/*.js'",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run build",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "autoprefixer": "^8.5.1",
