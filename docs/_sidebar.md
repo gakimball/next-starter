@@ -1,0 +1,8 @@
+* [Home](/)
+* [Setup](/setup)
+* [Next.js Primer](/next)
+* [Sass](/sass)
+* [MobX](/mobx)
+* [Server](/server)
+* [Configuration](/configuration)
+* [Deployment](/deployment)

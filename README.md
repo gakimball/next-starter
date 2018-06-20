@@ -33,32 +33,9 @@ It's not on npm yet, but you can install it from GitHub:
 npm i gakimball/next-starter next react react-dom --save
 ```
 
-The library also has a few peer dependencies:
-
-## File Structure
-
-This is the bare minimum you need for the boilerplate to work:
-
-```
-- pages
-  - _document.js
-  - index.js
-package.json
-```
-
-## Shell Commands
-
-These commands are wrappers for the Next.js shell commands, with some extra stuff sprinkled in.
-
-- `ueno-starter dev`: run app in development mode.
-  - `ueno-starter dev --remote`: run app in development mode, and allow the server to be accessed over the internet.
-- `ueno-starter build`: build app for production. Run this before deploying to a server.
-- `ueno-starter start`: run app in production mode.
-- `ueno-starter export`: export static version of app.
-
 ## Documentation
 
-[Read the documentation](ueno-starter/docs/)
+[Read the documentation](https://gakimball.github.io/next-starter)
 
 # License
 

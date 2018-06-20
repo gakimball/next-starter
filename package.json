@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "babel src/ -d lib/",
+    "docs": "docsify serve docs",
     "test": "eslint '**/*.js'",
     "prepublishOnly": "npm test && npm run build",
     "prepare": "npm run build"
@@ -68,6 +69,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-react": "^6.24.1",
+    "docsify-cli": "^4.2.1",
     "eslint": "^4.19.1",
     "mobx-react": "^5.0.0",
     "next": "^6.0.0",
