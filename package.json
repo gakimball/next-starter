@@ -2,13 +2,17 @@
   "name": "@ueno/starter",
   "version": "1.0.0",
   "description": "Ueno starter kit with next.js",
-  "main": "pages/index.js",
+  "files": [
+    "lib/**/*",
+    "*.js"
+  ],
+  "bin": {
+    "ueno-starter": "lib/bin/ueno-start.js"
+  },
   "scripts": {
-    "start": "./ueno-starter/bin/ueno-start.js start",
-    "dev": "./ueno-starter/bin/ueno-start.js dev",
-    "build": "./ueno-starter/bin/ueno-start.js build",
-    "static": "./ueno-starter/bin/ueno-start.js static",
-    "test": "jest"
+    "build": "babel src/ -d lib/",
+    "test": "eslint '**/*.js'",
+    "prepublishOnly": "npm test && npm run build"
   },
   "dependencies": {
     "autoprefixer": "^8.5.1",
@@ -19,8 +23,11 @@
     "babel-preset-env": "^1.7.0",
     "basic-auth": "^2.0.0",
     "chalk": "^2.4.1",
+    "classnames": "^2.2.5",
+    "classnames-loader": "^2.0.0",
     "compose-function": "^3.0.3",
     "compression": "^1.7.2",
+    "css-loader": "^0.28.11",
     "deep-assign": "^2.0.0",
     "dot-prop": "^4.2.0",
     "dotenv": "^5.0.1",
@@ -41,13 +48,17 @@
     "next-offline": "^2.7.1",
     "next-routes": "^1.4.2",
     "ngrok": "^3.0.1",
+    "node-sass": "^4.9.0",
     "postcss-csso": "^3.0.0",
+    "postcss-loader": "^2.1.5",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-ga": "^2.5.3",
     "react-helmet": "^5.2.0",
     "reload-server-webpack-plugin": "^1.0.1",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
     "svg-to-jsx-loader": "^2.0.1",
     "url": "^0.11.0",
     "uuid": "^3.2.1",
@@ -57,15 +68,12 @@
   "devDependencies": {
     "@ueno/eslint-config": "^1.2.8",
     "@ueno/stylelint-config": "^1.0.4",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
-    "classnames": "^2.2.5",
-    "classnames-loader": "^2.0.0",
-    "css-loader": "^0.28.11",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^4.19.1",
-    "node-sass": "^4.9.0",
-    "postcss-loader": "^2.1.5",
-    "sass-loader": "^7.0.1",
-    "style-loader": "^0.21.0",
     "stylelint": "^9.2.1"
   },
   "repository": {
@@ -81,5 +89,8 @@
   "bugs": {
     "url": "https://github.com/gakimball/next-starter/issues"
   },
-  "homepage": "https://github.com/gakimball/next-starter#readme"
+  "homepage": "https://github.com/gakimball/next-starter#readme",
+  "engines": {
+    "node": ">= 8"
+  }
 }

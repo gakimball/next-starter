@@ -62,3 +62,6 @@ typings/
 .server
 
 .DS_Store
+
+# Compiled files
+/lib

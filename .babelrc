@@ -1,3 +1,16 @@
 {
-  "presets": ["next/babel", "./ueno-starter/babel"]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }],
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "add-module-exports"
+  ]
 }
