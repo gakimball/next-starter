@@ -25,7 +25,15 @@ Also includes more helpful things on top:
 
 Critically, all the moving parts are contained inside a small handful of modules and scripts. This means the complexity of the build system is hidden away, and a project is more easily upgradeable, because the guts of the framework aren't in the main codebase, where they'd be checked into version control.
 
-**Still a work in progress; doesn't work as a library yet.** Use `npm run dev` to run the example app.
+## Installation
+
+It's not on npm yet, but you can install it from GitHub:
+
+```
+npm i gakimball/next-starter next react react-dom --save
+```
+
+The library also has a few peer dependencies:
 
 ## File Structure
 
