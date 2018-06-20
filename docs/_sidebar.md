@@ -4,5 +4,6 @@
 * [Sass](/sass)
 * [MobX](/mobx)
 * [Server](/server)
+* [Routing](/routing)
 * [Configuration](/configuration)
 * [Deployment](/deployment)

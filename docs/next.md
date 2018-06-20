@@ -66,6 +66,10 @@ import Router from 'next/router';
 Router.push('/about');
 ```
 
+## Advanced Routing
+
+Next's router can do most of the basics, but it can't do parameterized routing, like `/blog/:id`. For that, we turn to the next-routes library, which the starter kit includes. [Learn more about advanced routing.](/routing)
+
 ## Static Assets
 
 Your project has a `/static` folder, which is where images, fonts, etc. go. Reference them like normal HTML; don't use `require()` or `import`.
