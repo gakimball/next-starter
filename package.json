@@ -30,7 +30,6 @@
     "compression": "^1.7.2",
     "css-loader": "^0.28.11",
     "deep-assign": "^2.0.0",
-    "dot-prop": "^4.2.0",
     "dotenv": "^5.0.1",
     "error-stack-parser": "^2.0.1",
     "execa": "^0.10.0",
