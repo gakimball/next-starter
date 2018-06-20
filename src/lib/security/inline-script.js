@@ -2,7 +2,6 @@
 
 const crypto = require('crypto');
 const React = require('react');
-const PropTypes = require('prop-types');
 
 /**
  * Create a React component that can render an inline script, and add the script to the server's
@@ -46,14 +45,6 @@ module.exports = (response) => {
   const InlineScript = ({ body }) => (
     <script type="text/javascript" dangerouslySetInnerHTML={{ __html: hash(body) }} />
   );
-
-  /**
-   * Prop types for `<InlineScript />`.
-   * @prop {String} body - Contents of script.
-   */
-  InlineScript.propTypes = {
-    body: PropTypes.string.isRequired,
-  };
 
   return InlineScript;
 };

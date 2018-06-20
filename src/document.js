@@ -1,7 +1,6 @@
 /* eslint-disable react/no-danger, jsx-a11y/html-has-lang */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import NextDocument, { Head, Main, NextScript } from 'next/document';
 import getConfig from 'next/config';
@@ -26,27 +25,21 @@ export default class Document extends NextDocument {
     const documentProps = await super.getInitialProps(...args);
     const { res } = args[0];
 
+    /**
+     * Prop types for `<UenoDocument />`.
+     * @private
+     * @prop {Object} helmet - Helmet configuration.
+     * @prop {Function} InlineScript - Component that renders an inline script, hashes its contents,
+     * and adds the hash to the CSP of the Express response serving the page.
+     * @prop {String} nonce - Randomly-generated string to use as a nonce in inline scripts.
+     * Specifically, we use the nonce on Next.js's inline scripts, which we can't hash.
+     */
     return {
       ...documentProps,
       helmet: Helmet.renderStatic(),
       InlineScript: inlineScript(res),
       nonce: res.locals.nonce,
     };
-  }
-
-  /**
-   * Prop types for `<UenoDocument />`.
-   * @private
-   * @prop {Object} helmet - Helmet configuration.
-   * @prop {Function} InlineScript - Component that renders an inline script, hashes its contents,
-   * and adds the hash to the CSP of the Express response serving the page.
-   * @prop {String} nonce - Randomly-generated string to use as a nonce in inline scripts.
-   * Specifically, we use the nonce on Next.js's inline scripts, which we can't hash.
-   */
-  static propTypes = {
-    helmet: PropTypes.object.isRequired,
-    InlineScript: PropTypes.func.isRequired,
-    nonce: PropTypes.string.isRequired,
   }
 
   /**

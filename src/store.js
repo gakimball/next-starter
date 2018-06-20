@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// eslint-disable-next-line
 import { Provider } from 'mobx-react';
 import getConfig from 'next/config';
 import AnalyticsStore from './lib/analytics/store';
@@ -68,10 +68,6 @@ export default (storeList = {}) => App => class MobX extends Component {
       ),
       initialStoreState,
     };
-  }
-
-  static propTypes = {
-    initialStoreState: PropTypes.object,
   }
 
   static defaultProps = {
