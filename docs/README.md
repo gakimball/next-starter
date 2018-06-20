@@ -93,6 +93,12 @@ You can also call `s` as a function to make use of the [classnames](https://npmj
 
 ### MobX
 
+MobX and friends are sold separately.
+
+```
+npm i mobx mobx-react --save
+```
+
 To add MobX stores, first assemble all of your store classes in one place like this:
 
 ```js
