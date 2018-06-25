@@ -66,7 +66,7 @@ module.exports = (decorate = e => e) => app.prepare().then(() => {
   // This is where we allow the user to customize the server.
   // It comes after all the essential middleware is setup, and before the `*` route that
   // catches every unhandled request.
-  decorate(server);
+  decorate(server, app, config);
 
   if (config.routes) {
     const handle = config.routes.getRequestHandler(app);
