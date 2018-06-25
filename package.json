@@ -43,6 +43,7 @@
     "hpp": "^0.2.2",
     "lodash": "^4.17.10",
     "meow": "^5.0.0",
+    "mobx-react-devtools": "^5.0.1",
     "next-offline": "^2.7.1",
     "next-routes": "^1.4.2",
     "ngrok": "^3.0.1",
