@@ -56,9 +56,6 @@ module.exports = ({ dev = false }) => {
         },
       ],
     },
-    resolve: {
-      modules: ['node_modules', './'],
-    },
     node: false,
   };
 
