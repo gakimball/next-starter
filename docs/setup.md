@@ -35,7 +35,7 @@ export default () => <h1>Hello.</h1>
 Add the starter kit's custom server HTML. This is necessary to make some of the internals of the starter kit go, like CSS, react-helmet, analytics, and more.
 
 ```js
-export { default } from '@ueno/starter/document';
+export { default } from 'next-starter/document';
 ```
 
 ## `.babelrc`
@@ -44,7 +44,7 @@ The starter kit's Babel config adds decorator support.
 
 ```json
 {
-  "presets": ["next/babel", "@ueno/starter/babel"]
+  "presets": ["next/babel", "next-starter/babel"]
 }
 ```
 

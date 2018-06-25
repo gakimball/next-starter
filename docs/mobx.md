@@ -9,7 +9,7 @@ npm i mobx mobx-react --save
 To add MobX stores, first assemble all of your store classes in one place like this:
 
 ```js
-import store from '@ueno/starter/store';
+import store from 'next-starter/store';
 import PlanetsStore from './planets-store';
 import KittensStore from './kittens-store';
 

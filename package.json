@@ -1,5 +1,5 @@
 {
-  "name": "@ueno/starter",
+  "name": "next-starter",
   "version": "1.0.0",
   "description": "Ueno starter kit with next.js",
   "files": [

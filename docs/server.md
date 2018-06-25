@@ -11,7 +11,7 @@ The starter kit includes an Express server with a bunch of helpful middleware in
 To extend the default server, create a file `server/index.js` and add this:
 
 ```js
-import server from '@ueno/starter-kit/server';
+import server from 'next-starter/server';
 import graphql from 'express-graphql';
 
 server(app => {
